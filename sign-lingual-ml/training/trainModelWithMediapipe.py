@@ -49,7 +49,7 @@ def extract_landmarks(img):
         return [], []
     
 # return landmarks for original and augmented images
-def augment_and_extract_landmarks(image_path, augmentations=1):
+def augment_and_extract_landmarks(image_path, augmentations=0):
     
     image = cv2.imread(image_path)
     landmarks_list = []
