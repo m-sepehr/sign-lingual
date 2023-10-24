@@ -38,5 +38,7 @@ def process_images_folder(main_folder):
                     sheared_img = random_shear(rotated_img, x_shear, y_shear)
                     cv2.imwrite(path, sheared_img)
 
-main_folder_path = "/Users/sepehr/Downloads/archiveOG copy/asl_alphabet_train/asl_alphabet_train"
+# ----------- place the dataset folder in the parent sign-lingual-ml folder -----------
+main_folder_path = "../archive/asl_alphabet_train/asl_alphabet_train"
+# -------------------------------------------------------------------------------------
 process_images_folder(main_folder_path)

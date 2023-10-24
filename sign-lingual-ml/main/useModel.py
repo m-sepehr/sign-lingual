@@ -15,9 +15,11 @@ def f1_metric(y_true, y_pred):
     recall = true_positives / (possible_positives + K.epsilon())
     f1_val = 2*(precision*recall)/(precision+recall+K.epsilon())
     return f1_val
-# loading the model
 
+# loading the model
+# --------------- change the file path to the model you want to use ----------------
 model = tf.keras.models.load_model("../models/asl_landmark_detection_model_mediapipe.h5", custom_objects={"f1_metric": f1_metric})
+# ----------------------------------------------------------------------------------
 
 # initializing MediaPipe hand solution
 mp_hands = mp.solutions.hands
