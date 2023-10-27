@@ -30,18 +30,16 @@ import android.widget.Toast;
 import android.Manifest;
 
 import com.google.android.material.navigation.NavigationView;
-
-public class MainActivity extends AppCompatActivity implements ImageReader.OnImageAvailableListener, NavigationView.OnNavigationItemSelectedListener {
+public class CameraActivity extends AppCompatActivity implements ImageReader.OnImageAvailableListener, NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_camera);
 
-//        askCameraPermission();
+        askCameraPermission();
 
         setupUI();
     }
@@ -140,10 +138,10 @@ public class MainActivity extends AppCompatActivity implements ImageReader.OnIma
         if (itemID == android.R.id.home) {
             if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
-//                Toast.makeText(MainActivity.this, "inside", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CameraActivity.this, "inside", Toast.LENGTH_SHORT).show();
             } else {
                 drawerLayout.openDrawer(GravityCompat.START);
-//                Toast.makeText(MainActivity.this, "else", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CameraActivity.this, "else", Toast.LENGTH_SHORT).show();
             }
         }
         return true;
@@ -165,6 +163,5 @@ public class MainActivity extends AppCompatActivity implements ImageReader.OnIma
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
 }
