@@ -2,7 +2,6 @@ package com.example.signlingual;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -19,14 +18,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Surface;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 import android.Manifest;
 
 import com.google.android.material.navigation.NavigationView;
@@ -156,8 +149,8 @@ public class CameraActivity extends AppCompatActivity implements ImageReader.OnI
         } else if (itemID == R.id.page1) {
             Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
             startActivity(intent);
-        } else if (itemID == R.id.page2) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        } else if (itemID == R.id.settings) {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);

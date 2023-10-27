@@ -1,35 +1,18 @@
 package com.example.signlingual;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.core.os.LocaleListCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraManager;
-import android.media.ImageReader;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Size;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Surface;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
-import android.Manifest;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -82,8 +65,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (itemID == R.id.page1) {
             Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
             startActivity(intent);
-        } else if (itemID == R.id.page2) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        } else if (itemID == R.id.settings) {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -91,11 +74,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     private void loadPreferences() {
         // Set Language Configs. Check Android version for implementing backwards compatibility
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             LocaleListCompat locales = AppCompatDelegate.getApplicationLocales();
             Log.d("loadPreferences", locales.toString());
             AppCompatDelegate.setApplicationLocales(locales);
             //TODO: load any other preference for devices sdk < Tiramisu
         }
-
+    }
 }
