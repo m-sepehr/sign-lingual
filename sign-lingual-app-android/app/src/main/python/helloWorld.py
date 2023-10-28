@@ -1,3 +1,3 @@
 
 def greet():
-    return "Hello baby"
+    return "Hello world"
