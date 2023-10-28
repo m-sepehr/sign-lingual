@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,8 +20,11 @@ import android.util.Size;
 import android.view.MenuItem;
 import android.view.Surface;
 import android.Manifest;
-
 import com.google.android.material.navigation.NavigationView;
+import com.google.mediapipe.components.CameraHelper;
+import com.google.mediapipe.framework.AndroidAssetUtil;
+import com.google.mediapipe.solutioncore.ImageSolutionBase;
+
 public class CameraActivity extends AppCompatActivity implements ImageReader.OnImageAvailableListener, NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
