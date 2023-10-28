@@ -16,17 +16,18 @@ android {
             version "3.8"
             pip {
                 // A requirement specifier, with or without a version number:
-                install "tensorflowlite" // Use the correct package name for TensorFlow Lite
+//                install "tensorflowlite" // Use the correct package name for TensorFlow Lite
+                install "tflite-runtime"
                 install "numpy"
-                install "opencv-python"  // OpenCV package
-                install "mediapipe"
+//                install "opencv-python"  // OpenCV package
+//                install "mediapipe"
 
 
                 // You can also specify specific versions if needed:
-                // install "tensorflowlite==X.X.X"
+//                 install "tensorflowlite==X.X.X"
                 // install "numpy==X.X.X"
-                // install "opencv-python==X.X.X"
-                // install "mediapipe==X.X.X"
+//                 install "opencv-python==4.5.2"
+//                 install "mediapipe==X.X.X"
 
                 // Additional packages or configurations can be added as needed
 
