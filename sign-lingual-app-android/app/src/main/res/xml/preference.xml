@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="General">
+        <Preference
+            android:key="link"
+            android:summary="Link to SingLingual device"
+            android:title="Link Device"
+            android:icon="@drawable/baseline_leak_add_24"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Accessibility">
+        <ListPreference
+            android:defaultValue="1"
+            android:dialogTitle="Languages"
+            android:key="language"
+            android:summary="Change displayed language and spoken language"
+            android:title="Language"
+            android:icon="@drawable/outline_type_specimen_24"/>
+        <SwitchPreference
+            android:key="subtitles"
+            android:summary="Enable Sign to text subtitles"
+            android:title="Enable Subtitles"
+            android:icon="@drawable/outline_lyrics_24"/>
+        <SwitchPreference
+            android:key="enable_voice"
+            android:summary="Enable Sign to speech subtitles"
+            android:title="Enable Voice"
+            android:icon="@drawable/baseline_voice_chat_24"/>
+        <ListPreference
+            android:dialogTitle="Voice Customization"
+            android:enabled="false"
+            android:key="custom_voice"
+            android:summary="Change voice intonation, gender, etc"
+            android:title="Voice Customization"
+            android:icon="@drawable/twotone_transcribe_24"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="help_category"
+        android:title="Help">
+        <Preference
+            android:key="tutorial"
+            android:summary="Restart the tutorial"
+            android:title="Tutorial" />
+        <Preference
+            android:key="feedback"
+            android:summary="Report technical issues or suggest new features"
+            android:title="Send Feedback"
+            android:icon="@drawable/outline_sms_failed_24"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
