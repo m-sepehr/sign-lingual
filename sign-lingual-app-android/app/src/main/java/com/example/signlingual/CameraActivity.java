@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
+import android.media.Image;
 import android.media.ImageReader;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,7 +23,15 @@ import android.view.MenuItem;
 import android.view.Surface;
 import android.Manifest;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import com.google.android.material.navigation.NavigationView;
+
+import java.nio.ByteBuffer;
+
 public class CameraActivity extends AppCompatActivity implements ImageReader.OnImageAvailableListener, NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
@@ -111,8 +120,46 @@ public class CameraActivity extends AppCompatActivity implements ImageReader.OnI
 
     @Override
     public void onImageAvailable(ImageReader imageReader) {
-        imageReader.acquireLatestImage().close();
+        Image image = imageReader.acquireLatestImage();
+        if (image == null) return;
+
+        ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+        byte[] bytes = new byte[buffer.remaining()];
+        buffer.get(bytes);
+
+        image.close();
+
+        sendImageToServer(bytes);
     }
+
+    private void sendImageToServer(byte[] imageBytes) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://RASPBERRY_PI_IP:5000/upload"); // Replace RASPBERRY_PI_IP with your Pi's IP address
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/octet-stream");
+                connection.getOutputStream().write(imageBytes);
+
+                InputStream responseStream = new BufferedInputStream(connection.getInputStream());
+                byte[] responseData = new byte[1024];
+                int bytesRead;
+                StringBuilder response = new StringBuilder();
+                while ((bytesRead = responseStream.read(responseData)) != -1) {
+                    response.append(new String(responseData, 0, bytesRead));
+                }
+
+                Log.d("Server Response", response.toString());
+                connection.disconnect();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+
 
     private void setupUI() {
         drawerLayout = findViewById(R.id.drawer_layout);
