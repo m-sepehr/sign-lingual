@@ -13,7 +13,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-
+import android.view.Surface;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+import android.Manifest;
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+import com.chaquo.python.android.AndroidPlatform;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,7 +33,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(!Python.isStarted()){
+            Python.start(new AndroidPlatform(this));
+        }
 
+        Python py = Python.getInstance();
+        PyObject pyf = py.getModule("helloWorld");
+        String str = pyf.callAttr("greet").toString();
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
         setupUI();
         loadPreferences();
     }
