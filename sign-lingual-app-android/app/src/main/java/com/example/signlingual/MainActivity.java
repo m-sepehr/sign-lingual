@@ -1,6 +1,7 @@
 package com.example.signlingual;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -8,10 +9,14 @@ import androidx.core.os.LocaleListCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -21,6 +26,8 @@ import android.widget.Toast;
 import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
+
+import com.erkutaras.showcaseview.ShowcaseManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -31,13 +38,15 @@ import com.chaquo.python.android.AndroidPlatform;
 
 import com.google.android.material.navigation.NavigationView;
 
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private Button buttonSettings, buttonGuide;
     private LinearLayout layoutStandalone, layoutConRPI;
+    private Button btn_raspPi, btn_stndAlone;
+    private boolean startTutorial;
+    private static final String tutString = "startTutorial";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +55,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setupUI();
         loadPreferences();
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        // Required as tutorial does not open as soon as the app starts.
+        if (startTutorial) {
+            Handler handler = new Handler();
+            handler.postDelayed(this::buildTutorialStart, 100);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ShowcaseManager.REQUEST_CODE_SHOWCASE && resultCode == Activity.RESULT_OK && startTutorial) {
+            // Required to prevent the first tutorial from starting on top of the camera tutorial
+            startTutorial = false;
+            Log.i("Activity Result", "Tutorial Dismissed #1");
+            Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+            startActivity(intent);
+        }
+    }
 
     private void setupUI() {
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -98,6 +127,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar.setBackgroundColor(Color.BLACK);
         getSupportActionBar().setTitle("SignLingual");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setButtons();
     }
 
 
@@ -146,6 +177,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
     private void loadPreferences() {
+        // Load shared preferences
+        SharedPreferences shared = getSharedPreferences("AppSharedPreferences", Context.MODE_PRIVATE);
+        startTutorial = shared.getBoolean(tutString, true);
+        Log.i("StartTutorial", "Start Tutorial? " + startTutorial);
+
         // Set Language Configs. Check Android version for implementing backwards compatibility
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             LocaleListCompat locales = AppCompatDelegate.getApplicationLocales();
@@ -154,4 +190,90 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //TODO: load any other preference for devices sdk < Tiramisu
         }
     }
+
+    private void setButtons() {
+        btn_raspPi = findViewById(R.id.button3);
+        btn_stndAlone = findViewById(R.id.button4);
+
+        //TODO: Set up the button listeners.
+    }
+
+    private void addPoint(ShowcaseManager.Builder builder, Context context, String key, View view, String shape, String title, String text) {
+        builder.context(context)
+                .key(key)
+                .developerMode(true)
+                .view(view)
+                .descriptionTitle(title)
+                .descriptionText(text)
+                .buttonText("Done");
+        switch (shape) {
+            case "rectangle":
+                builder.rectangle();
+                break;
+            case "circle":
+                builder.circle();
+                break;
+            case "roundtangle":
+                builder.roundedRectangle();
+                break;
+        }
+        builder.add();
+    }
+
+    private void buildTutorialStart() {
+        ShowcaseManager.Builder builder = new ShowcaseManager.Builder();
+        addPoint(builder,
+                MainActivity.this,
+                "Connect",
+                btn_raspPi,
+                "roundtangle",
+                "Connect",
+                "With this button you can connect to a near Raspberry Pi.");
+        addPoint(builder,
+                MainActivity.this,
+                "StandAlone",
+                btn_stndAlone,
+                "roundtangle",
+                "Continue",
+                "Continue without connecting to external device");
+
+        addPoint(builder,
+                MainActivity.this,
+                "Toolbar",
+                findViewById(R.id.toolbar),
+                "roundtangle",
+                "Toolbar",
+                "This is the main toolbar. Here you can Navigate the App.");
+        builder.build().show();
+    }
+    /*
+    // Unused for now as the Showcase does not work properly with the drawer.
+    private void buildTutorialMenu() {
+        ShowcaseManager.Builder builder = new ShowcaseManager.Builder();
+        addPoint(builder,
+                MainActivity.this,
+                "Home",
+                findViewById(R.id.navHome),
+                "roundtangle",
+                "Got to main page",
+                "Here you can go back to the main page.");
+        addPoint(builder,
+                MainActivity.this,
+                "Page 1",
+                findViewById(R.id.navHome),
+                "roundtangle",
+                "Camera",
+                "Here you can go to the camera view.");
+        addPoint(builder,
+                MainActivity.this,
+                "Settings",
+                findViewById(R.id.settings),
+                "roundtangle",
+                "Go to Settings",
+                "You can change your preferences here");
+
+        builder.build().show();
+    }
+ */
+
 }

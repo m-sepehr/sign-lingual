@@ -1,6 +1,8 @@
 package com.example.signlingual;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -66,9 +68,14 @@ public class SettingsFragments extends PreferenceFragment {
             return true;
         });
         btn_tutorial.setOnPreferenceClickListener(preference -> {
-            //TODO: implement Tutorial
-            // STUB
-            Toast.makeText(getContext(), "Not implemented Yet", Toast.LENGTH_LONG).show();
+            SharedPreferences shared = getContext().getSharedPreferences("AppSharedPreferences", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = shared.edit();
+            editor.putBoolean("startTutorial",true);
+            editor.commit();
+
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            this.startActivity(intent);
+            getActivity().finishAffinity();
             return true;
         });
         btn_feedback.setOnPreferenceClickListener(preference -> {

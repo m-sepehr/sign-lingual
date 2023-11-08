@@ -87,4 +87,7 @@ dependencies {
 
     implementation 'com.google.flogger:flogger:0.5.1'
     implementation 'com.google.flogger:flogger-system-backend:0.5.1'
+
+    implementation 'com.github.erkutaras:ShowcaseView:1.5.0'
+
 }

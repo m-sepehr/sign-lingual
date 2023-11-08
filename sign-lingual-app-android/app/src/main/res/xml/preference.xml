@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="General">
+    <PreferenceCategory android:title="@string/general">
         <Preference
             android:key="link"
-            android:summary="Link to SingLingual device"
-            android:title="Link Device"
+            android:summary="@string/link_device_summary"
+            android:title="@string/link_device"
             android:icon="@drawable/baseline_leak_add_24"/>
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Accessibility">
+    <PreferenceCategory android:title="@string/accessibility">
         <ListPreference
             android:defaultValue="1"
-            android:dialogTitle="Languages"
+            android:dialogTitle="@string/languages_dialogue_title"
             android:key="language"
-            android:summary="Change displayed language and spoken language"
-            android:title="Language"
+            android:summary="@string/language_summary"
+            android:title="@string/language_title"
             android:icon="@drawable/outline_type_specimen_24"/>
         <SwitchPreference
             android:key="subtitles"
-            android:summary="Enable Sign to text subtitles"
-            android:title="Enable Subtitles"
+            android:summary="@string/subtitles_summary"
+            android:title="@string/enable_subtitles_title"
             android:icon="@drawable/outline_lyrics_24"/>
         <SwitchPreference
             android:key="enable_voice"
-            android:summary="Enable Sign to speech subtitles"
-            android:title="Enable Voice"
+            android:summary="@string/enable_voice_summary"
+            android:title="@string/enable_voice_title"
             android:icon="@drawable/baseline_voice_chat_24"/>
         <ListPreference
-            android:dialogTitle="Voice Customization"
+            android:dialogTitle="@string/voice_customization_dialogue_title"
             android:enabled="false"
             android:key="custom_voice"
-            android:summary="Change voice intonation, gender, etc"
-            android:title="Voice Customization"
+            android:summary="@string/custom_voice_summary"
+            android:title="@string/custom_voice_title"
             android:icon="@drawable/twotone_transcribe_24"/>
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="help_category"
-        android:title="Help">
+        android:title="@string/help">
         <Preference
             android:key="tutorial"
-            android:summary="Restart the tutorial"
-            android:title="Tutorial" />
+            android:summary="@string/tutorial_summary"
+            android:title="@string/tutorial_title" />
         <Preference
             android:key="feedback"
-            android:summary="Report technical issues or suggest new features"
-            android:title="Send Feedback"
+            android:summary="@string/feedback_summary"
+            android:title="@string/feedback_title"
             android:icon="@drawable/outline_sms_failed_24"/>
 
     </PreferenceCategory>

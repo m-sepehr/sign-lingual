@@ -1,6 +1,7 @@
 package com.example.signlingual;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -18,11 +20,14 @@ import android.hardware.camera2.CameraManager;
 import android.media.ImageReader;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Size;
 import android.view.MenuItem;
 import android.view.Surface;
 import android.Manifest;
+
+import com.erkutaras.showcaseview.ShowcaseManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.mediapipe.components.CameraHelper;
 import com.google.mediapipe.framework.AndroidAssetUtil;
@@ -33,6 +38,7 @@ public class CameraActivity extends AppCompatActivity implements ImageReader.OnI
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    private boolean startTutorial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,31 @@ public class CameraActivity extends AppCompatActivity implements ImageReader.OnI
         askCameraPermission();
 
         setupUI();
+
+        SharedPreferences shared = getSharedPreferences("AppSharedPreferences", Context.MODE_PRIVATE);
+        startTutorial = shared.getBoolean("startTutorial", true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("Start Tutorial", "Start Tutorial? "+startTutorial);
+        // Required as tutorial does not open as soon as the app starts.
+        if (startTutorial) {
+            Handler handler = new Handler();
+            handler.postDelayed(this::buildTutorialCamera, 100);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ShowcaseManager.REQUEST_CODE_SHOWCASE && resultCode == Activity.RESULT_OK && startTutorial) {
+            Log.i("Activity Result", "Tutorial Dismissed #2");
+            startTutorial = false;
+            Intent intent = new Intent(getApplicationContext(), LiveTranslation.class);
+            startActivity(intent);
+        }
     }
 
     public void askCameraPermission() {
@@ -86,14 +117,11 @@ public class CameraActivity extends AppCompatActivity implements ImageReader.OnI
         CameraConnectionFragment fragment;
         CameraConnectionFragment camera2Fragment =
                 CameraConnectionFragment.newInstance(
-                        new CameraConnectionFragment.ConnectionCallback() {
-                            @Override
-                            public void onPreviewSizeChosen(final Size size, final int rotation) {
-                                previewHeight = size.getHeight();
-                                previewWidth = size.getWidth();
-                                Log.d("tryOrientation","rotation: "+rotation+"   orientation: "+getScreenOrientation()+"  "+previewWidth+"   "+previewHeight);
-                                sensorOrientation = rotation - getScreenOrientation();
-                            }
+                        (size, rotation) -> {
+                            previewHeight = size.getHeight();
+                            previewWidth = size.getWidth();
+                            Log.d("tryOrientation","rotation: "+rotation+"   orientation: "+getScreenOrientation()+"  "+previewWidth+"   "+previewHeight);
+                            sensorOrientation = rotation - getScreenOrientation();
                         },
                         this,
                         R.layout.camera_fragment,
@@ -177,4 +205,18 @@ public class CameraActivity extends AppCompatActivity implements ImageReader.OnI
         return true;
     }
 
+    private void buildTutorialCamera() {
+        ShowcaseManager.Builder builder = new ShowcaseManager.Builder();
+        builder.context(CameraActivity.this)
+                .key("Camera")
+                .developerMode(true)
+                .view(findViewById(R.id.toolbar))
+                .descriptionTitle("Camera View")
+                .descriptionText("Here you can see what your camera is aiming.")
+                .buttonText("Done")
+                .roundedRectangle()
+                .add()
+                .build()
+                .show();
+    }
 }

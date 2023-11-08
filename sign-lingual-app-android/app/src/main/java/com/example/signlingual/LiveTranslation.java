@@ -1,21 +1,27 @@
 package com.example.signlingual;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.erkutaras.showcaseview.ShowcaseManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
@@ -27,12 +33,13 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 public class LiveTranslation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    String message="";
+    String message = "";
     TextView conversation;
     Button launch, stop;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private boolean readable = false;
+    private boolean startTutorial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +52,12 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
         stop = findViewById(R.id.stop_translation);
         readyReference.setValue(false);
 
-
-
-
         setupUI();
 
         readyReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue().equals(true)){
-                    readable = true;
-                }else{
-                    readable = false;
-                }
+                readable = snapshot.getValue().equals(true);
             }
 
             @Override
@@ -121,8 +121,10 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
 
             }
         });
-    }
 
+        SharedPreferences shared = getSharedPreferences("AppSharedPreferences", Context.MODE_PRIVATE);
+        startTutorial = shared.getBoolean("startTutorial", true);
+    }
 
 
     private void setupUI() {
@@ -180,5 +182,43 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("Start Tutorial", "Start Tutorial? " + startTutorial);
+        // Required as tutorial does not open as soon as the app starts.
+        if (startTutorial) {
+            Handler handler = new Handler();
+            handler.postDelayed(this::buildTutorialLiveTranslation, 100);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ShowcaseManager.REQUEST_CODE_SHOWCASE && resultCode == Activity.RESULT_OK && startTutorial) {
+            Log.i("Activity Result", "Tutorial Dismissed #2");
+            startTutorial = false;
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    private void buildTutorialLiveTranslation() {
+        ShowcaseManager.Builder builder = new ShowcaseManager.Builder();
+        builder.context(LiveTranslation.this)
+                .key("Translation")
+                .developerMode(true)
+                .view(findViewById(R.id.toolbar))
+                .descriptionTitle("Translation")
+                .descriptionText("Here you can see the application's interpretation of Sign Language.")
+                .buttonText("Done")
+                .roundedRectangle()
+                .add();
+
+        builder.build()
+                .show();
     }
 }

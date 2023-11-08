@@ -5,5 +5,35 @@
     <string name="send_command_to_raspberry_pi">Send command to raspberry Pi</string>
     <string name="standalone_mode">Standalone Mode</string>
     <string name="sign_language_guide">Sign Language Guide</string>
+
+    <!-- Navigation Menu Strings -->
+    <string name="header_text">This is header</string>
+    <string name="home">Home</string>
+    <string name="option1_title">Camera</string>
     <string name="settings">Settings</string>
+
+    <!-- Preferences/Settings Strings -->
+    <string name="link_device">Link Device</string>
+    <string name="general">General</string>
+    <string name="link_device_summary">Link to SingLingual device</string>
+    <string name="accessibility">Accessibility</string>
+    <string name="languages_dialogue_title">Languages</string>
+    <string name="language_title">Language</string>
+    <string name="language_summary">Change displayed language and spoken language</string>
+    <string name="enable_subtitles_title">Enable Subtitles</string>
+    <string name="subtitles_summary">Enable Sign to text subtitles</string>
+    <string name="enable_voice_title">Enable Voice</string>
+    <string name="enable_voice_summary">Enable Sign to speech subtitles</string>
+    <string name="voice_customization_dialogue_title">Voice Customization</string>
+    <string name="custom_voice_summary">Change voice intonation, gender, etc</string>
+    <string name="custom_voice_title">Voice Customization</string>
+    <string name="help">Help</string>
+    <string name="tutorial_title">Tutorial</string>
+    <string name="tutorial_summary">Restart the tutorial</string>
+    <string name="feedback_title">Send Feedback</string>
+    <string name="feedback_summary">Report technical issues or suggest new features</string>
+
+    <!-- Tutorial Strings -->
+    <!-- Main/Home Activity -->
+
 </resources>
