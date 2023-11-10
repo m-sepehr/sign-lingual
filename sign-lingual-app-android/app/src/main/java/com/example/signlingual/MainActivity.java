@@ -33,14 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(!Python.isStarted()){
-            Python.start(new AndroidPlatform(this));
-        }
 
-        Python py = Python.getInstance();
-        PyObject pyf = py.getModule("helloWorld");
-        String str = pyf.callAttr("greet").toString();
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
         setupUI();
         loadPreferences();
     }
