@@ -41,7 +41,7 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
         conversation = findViewById(R.id.text_translated);
         launch = findViewById(R.id.start_translation);
         stop = findViewById(R.id.stop_translation);
-        readyReference.setValue("false");
+        readyReference.setValue(false);
 
 
 
@@ -50,7 +50,7 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
         readyReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue().toString().equals("true")){
+                if(snapshot.getValue().equals(true)){
                     readable = true;
                 }else{
                     readable = false;
@@ -101,7 +101,7 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
                 launch.setVisibility(View.INVISIBLE);
                 stop.setClickable(true);
                 stop.setVisibility(View.VISIBLE);
-                readyReference.setValue("true");
+                readyReference.setValue(true);
 
 
             }
@@ -113,7 +113,7 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
                 launch.setVisibility(View.VISIBLE);
                 stop.setVisibility(View.INVISIBLE);
                 stop.setClickable(false);
-                readyReference.setValue("false");
+                readyReference.setValue(false);
 
 
             }
