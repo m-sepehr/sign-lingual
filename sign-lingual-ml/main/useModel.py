@@ -7,11 +7,21 @@ import tensorflow as tf
 from tensorflow.keras import backend as K
 import gtts
 from playsound import playsound
+from dotenv import load_dotenv
 
 
 # constants
 image_width, image_height = 200, 200 
-#openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# setting the OpenAI API key
+# -----------------------------------------------------------------------
+# create a .env file in the same directory as this file
+# write: OPENAI_API_KEY=<your api key> in the .env file
+# -----------------------------------------------------------------------
+
+# loading environment variables from api.env
+load_dotenv('api.env')
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def f1_metric(y_true, y_pred):
     true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
@@ -57,7 +67,7 @@ def predict_asl_letter(landmarks):
     
     return predicted_label, predicted_prob
 
-# def correct_typo(word, context_buffer):
+def correct_typo(word, context_buffer):
     # adding context window for better typo corrections
     context = ' '.join(context_buffer[-5:])  # window size can be adjusted here
 
@@ -127,29 +137,34 @@ while cap.isOpened():
 
              # if the symbol has been detected consistently, add it to the captured sequence
             if current_symbol_count == capture_threshold and current_symbol != previous_symbol: # avoiding adding the same symbol twice (right now only 1 unique letter captured at a time)
+                
                 if predicted_label == 'space':
+
                     # if space is detected, taking the last word from captured_sequence and uploading for correction
                     words = captured_sequence.strip().rsplit(' ', 1)
+
                     if len(words) > 0:
-                        # corrected_word = correct_typo(words[-1], context_buffer)
-                        # context_buffer.append(corrected_word)  # add the corrected word to the context buffer
+                        corrected_word = correct_typo(words[-1], context_buffer)
+                        context_buffer.append(corrected_word)  # add the corrected word to the context buffer
                         
                         if len(context_buffer) > 5:  # maintaining the last 5 words for context by removing the oldest word
                             context_buffer.pop(0)  
                         
                         # converting the corrected word to speech and playing it
-                        #tts = gtts.gTTS(corrected_word, slow=True)
-                        #tts.save("output.mp3")
-                        #playsound("output.mp3")
+                        tts = gtts.gTTS(corrected_word, slow=True)
+                        tts.save("output.mp3")
+                        playsound("output.mp3")
 
                         # adding the corrected word to the corrected_sequence
-                        #corrected_sequence += corrected_word.upper() + ' '
+                        corrected_sequence += corrected_word.upper() + ' '
                         captured_sequence += ' '
 
                 # text deletion (to fix)
                 elif predicted_label == 'del' and len(captured_sequence) > 0:
+
                     captured_sequence = captured_sequence[:-1]  # remove the last character for "del"
                     # handle deletion for corrected_sequence
+
                     if corrected_sequence and corrected_sequence[-1] == ' ':
                         # remove the last word from corrected_sequence
                         corrected_sequence = corrected_sequence.rsplit(' ', 2)[0] + ' '
