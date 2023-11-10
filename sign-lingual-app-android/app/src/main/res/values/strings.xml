@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Sign Lingual</string>
+    <string name="mainHeader">Detect, Transcribe, Speak with Sign Language</string>
 </resources>
