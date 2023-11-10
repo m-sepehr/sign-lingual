@@ -6,17 +6,24 @@
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
 
     <application
+        android:name="com.chaquo.python.android.PyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.SignLingual"
-        tools:targetApi="31"
-        android:localeConfig="@xml/locales_config">
+        tools:targetApi="31">
+        <activity
+            android:name=".LiveTranslation"
+            android:exported="false" />
         <activity
             android:name=".CameraActivity"
             android:exported="false" />
