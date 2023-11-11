@@ -17,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
+import android.media.Image;
 import android.media.ImageReader;
 import android.os.Build;
 import android.os.Bundle;
@@ -146,7 +147,10 @@ public class CameraActivity extends AppCompatActivity implements ImageReader.OnI
 
     @Override
     public void onImageAvailable(ImageReader imageReader) {
-        imageReader.acquireLatestImage().close();
+        Image image = imageReader.acquireLatestImage();
+        if (image != null) {
+            image.close();
+        }
     }
 
     private void setupUI() {
