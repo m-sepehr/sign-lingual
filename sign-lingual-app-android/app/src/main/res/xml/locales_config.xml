@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- List of current and future spoken languages supported -->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en"/>
+</locale-config>
+<!-- List of current and possible future Signed languages supported -->
