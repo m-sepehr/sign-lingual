@@ -8,8 +8,34 @@ from tensorflow.keras import backend as K
 import gtts
 from playsound import playsound
 from dotenv import load_dotenv
-import asyncio
 import threading
+import requests
+import time
+
+# Firebase Realtime Database URL
+database_url = "https://signlingual-901cc-default-rtdb.firebaseio.com"
+
+def get_ready_status():
+    """
+    Check the 'ready' key in Firebase and return its value.
+    """
+    # headers = {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'}
+    response = requests.get(f"{database_url}/ready.json")
+    ready_status = response.json()
+    print("Ready status response:", ready_status, "Type:", type(ready_status))  # Debugging print
+    return ready_status
+
+def send_data(corrected_word):
+    """
+    Send a string to the 'sentence' key in Firebase.
+    """
+    sentence = corrected_word
+    response = requests.put(f"{database_url}/sentence.json", json=sentence)
+    print("Sending data response:", response.status_code, response.json())  # Debugging print
+    if response.status_code == 200:
+        print("Data sent to Firebase.")
+    else:
+        print(f"Failed to send data. Status code: {response.status_code}")
 
 # constants
 image_width, image_height = 200, 200 
@@ -78,14 +104,16 @@ def correct_typo_play_audio(word):
     # adding context window for better typo corrections
     context = ' '.join(context_buffer[-5:])  # window size can be adjusted here
 
+    
     completion = client.chat.completions.create(
-        model="gpt-4-1106-preview",
+        model="gpt-4",
         messages=[
-            {"role": "system", "content": "You correct typos in the last word and return only the last word's correction. Don't add punctuation. If you don't understand the last word, just return the original last word. Nothing else."},
+            {"role": "system", "content": "You are an autocorrect model. Correct only the last word and output only the last word. Use the previous words (if any) as context. Don't add punctuation. If you don't understand the last word, just return the original last word. Nothing else."},
             {"role": "user", "content": context + ' ' + word},
         ],
-        #temperature=1,
+        temperature=0.05,
     )
+    print (completion)
     # extracting the last word from the completion as a precaution
     corrected_word = completion.choices[0].message.content.strip().split()[-1]
     corrected_sequence += corrected_word.upper() + ' '
@@ -100,7 +128,7 @@ def correct_typo_play_audio(word):
     model="tts-1",
       voice="echo",
       response_format="mp3",
-      speed=1,
+      speed=0.8,
       input= corrected_word
     )
 
@@ -108,6 +136,8 @@ def correct_typo_play_audio(word):
     # ----------------------------------------------
 
     playsound("output.mp3")
+    
+    send_data(corrected_word)
 
     context_buffer.append(corrected_word)  # add the corrected word to the context buffer
 
@@ -122,7 +152,7 @@ current_symbol = None
 previous_symbol = None
 current_symbol_count = 0
 captured_sequence = ""
-capture_threshold = 7  # Number of frames to detect the same symbol before capturing it
+capture_threshold = 4  # Number of frames to detect the same symbol before capturing it
 corrected_sequence = ""  # sequence of words after typo correction
 context_buffer = [] # Buffer to hold the sliding window of words for context
 
@@ -214,7 +244,6 @@ def main():
         cv2.imshow("ASL Detection", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-
     cap.release()
     cv2.destroyAllWindows()
 
