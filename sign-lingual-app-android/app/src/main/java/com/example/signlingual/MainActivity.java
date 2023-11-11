@@ -68,8 +68,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemID = item.getItemId();
         if (itemID == R.id.navHome) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
+            //DO NOTHING
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            startActivity(intent);
         } else if (itemID == R.id.page1) {
             Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
             startActivity(intent);

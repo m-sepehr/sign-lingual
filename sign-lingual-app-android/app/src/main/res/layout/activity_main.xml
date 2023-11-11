@@ -179,9 +179,9 @@
                                 android:id="@+id/button3"
                                 android:layout_width="fill_parent"
                                 android:layout_height="60dp"
-                                android:text=" Connect to Raspberry Pi "
+                                android:text="@string/settings"
                                 app:rippleColor="#F3EFEF"
-                                android:drawableLeft="@drawable/baseline_leak_add_24"/>
+                                android:drawableLeft="@drawable/cogsettings"/>
                             <TextView
                                 android:id="@+id/empty"
                                 android:layout_width="match_parent"
@@ -192,7 +192,7 @@
                                 android:id="@+id/button4"
                                 android:layout_width="fill_parent"
                                 android:layout_height="60dp"
-                                android:text="Standalone Mode"
+                                android:text="@string/sign_language_guide"
                                 android:drawableLeft="@android:drawable/ic_menu_search"/>
 
                         </LinearLayout>
