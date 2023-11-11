@@ -13,6 +13,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+
+import android.widget.Toast;
+
+
 import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +27,9 @@ import android.Manifest;
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
+
 import com.google.android.material.navigation.NavigationView;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,7 +45,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setupUI();
         loadPreferences();
+
     }
+
+
 
     private void setupUI() {
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -61,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         buttonGuide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LiveTranslation.class);
                 startActivity(intent);
             }
         });
@@ -77,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         layoutConRPI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CameraActivity.class); //LiveTranslation
+                Intent intent = new Intent(getApplicationContext(), LiveTranslation.class); //LiveTranslation
                 startActivity(intent);
             }
         });
@@ -108,17 +117,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemID = item.getItemId();
+        Bundle params = new Bundle();  // Create a bundle to hold parameters
+
         if (itemID == R.id.navHome) {
-            //DO NOTHING
-//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//            startActivity(intent);
+            params.putString("message", "User navigated to Home");
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         } else if (itemID == R.id.page1) {
+            params.putString("message", "User navigated to Page 1");
             Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
             startActivity(intent);
         } else if (itemID == R.id.settings) {
+            params.putString("message", "User navigated to Settings");
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
+        }else if (itemID == R.id.liveTranslation) {
+            params.putString("message", "User navigated to Live Translation");
+            Intent intent = new Intent(getApplicationContext(), LiveTranslation.class);
+            startActivity(intent);
         } else if (itemID == R.id.standaloneMode) {
+            params.putString("message", "User navigated to Standalone");
             Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
             startActivity(intent);
         }
