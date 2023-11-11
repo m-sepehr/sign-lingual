@@ -62,7 +62,7 @@ import java.util.concurrent.TimeUnit;
 public class CameraConnectionFragment extends Fragment {
 
 
-    /**
+    /**x
      * The camera preview size will be chosen to be the smallest frame by pixel size capable of
      * containing a DESIRED_SIZE x DESIRED_SIZE square.
      */
@@ -442,43 +442,44 @@ public class CameraConnectionFragment extends Fragment {
             previewRequestBuilder.addTarget(previewReader.getSurface());
 
             // Here, we create a CameraCaptureSession for camera preview.
-            cameraDevice.createCaptureSession(
-                    Arrays.asList(surface, previewReader.getSurface()),
-                    new CameraCaptureSession.StateCallback() {
+            if (cameraDevice != null)
+                cameraDevice.createCaptureSession(
+                        Arrays.asList(surface, previewReader.getSurface()),
+                        new CameraCaptureSession.StateCallback() {
 
-                        @Override
-                        public void onConfigured(final CameraCaptureSession cameraCaptureSession) {
-                            // The camera is already closed
-                            if (null == cameraDevice) {
-                                return;
+                            @Override
+                            public void onConfigured(final CameraCaptureSession cameraCaptureSession) {
+                                // The camera is already closed
+                                if (null == cameraDevice) {
+                                    return;
+                                }
+
+                                // When the session is ready, we start displaying the preview.
+                                captureSession = cameraCaptureSession;
+                                try {
+                                    // Auto focus should be continuous for camera preview.
+                                    previewRequestBuilder.set(
+                                            CaptureRequest.CONTROL_AF_MODE,
+                                            CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+                                    // Flash is automatically enabled when necessary.
+                                    previewRequestBuilder.set(
+                                            CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+
+                                    // Finally, we start displaying the camera preview.
+                                    previewRequest = previewRequestBuilder.build();
+                                    captureSession.setRepeatingRequest(
+                                            previewRequest, captureCallback, backgroundHandler);
+                                } catch (final CameraAccessException e) {
+                             //       LOGGER.e(e, "Exception!");
+                                }
                             }
 
-                            // When the session is ready, we start displaying the preview.
-                            captureSession = cameraCaptureSession;
-                            try {
-                                // Auto focus should be continuous for camera preview.
-                                previewRequestBuilder.set(
-                                        CaptureRequest.CONTROL_AF_MODE,
-                                        CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-                                // Flash is automatically enabled when necessary.
-                                previewRequestBuilder.set(
-                                        CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-
-                                // Finally, we start displaying the camera preview.
-                                previewRequest = previewRequestBuilder.build();
-                                captureSession.setRepeatingRequest(
-                                        previewRequest, captureCallback, backgroundHandler);
-                            } catch (final CameraAccessException e) {
-                         //       LOGGER.e(e, "Exception!");
+                            @Override
+                            public void onConfigureFailed(final CameraCaptureSession cameraCaptureSession) {
+                                showToast("Failed");
                             }
-                        }
-
-                        @Override
-                        public void onConfigureFailed(final CameraCaptureSession cameraCaptureSession) {
-                            showToast("Failed");
-                        }
-                    },
-                    null);
+                        },
+                        null);
         } catch (final CameraAccessException e) {
     //        LOGGER.e(e, "Exception!");
         }
