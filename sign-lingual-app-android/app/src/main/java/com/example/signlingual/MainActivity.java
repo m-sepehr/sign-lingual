@@ -17,6 +17,7 @@ import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.Manifest;
 import com.chaquo.python.PyObject;
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    private Button buttonSettings, buttonGuide;
+    private LinearLayout layoutStandalone, layoutConRPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +45,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
+        buttonSettings = findViewById(R.id.buttonSettings);
+        buttonGuide = findViewById(R.id.buttonGuide);
+        layoutStandalone = findViewById(R.id.layoutStandalone);
+        layoutConRPI = findViewById(R.id.layoutConRPI);
+
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonGuide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        layoutStandalone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        layoutConRPI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CameraActivity.class); //LiveTranslation
+                startActivity(intent);
+            }
+        });
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("SignLingual");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -76,6 +117,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         } else if (itemID == R.id.settings) {
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+        } else if (itemID == R.id.standaloneMode) {
+            Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
             startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);

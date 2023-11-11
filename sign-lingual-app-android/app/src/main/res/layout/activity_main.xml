@@ -34,7 +34,6 @@
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -43,7 +42,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="0.15">
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/textHeader"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="@string/mainHeader"
@@ -59,7 +58,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                       >
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -71,7 +71,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight=".45"
                             android:background="@drawable/shape"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:id="@+id/layoutStandalone">
                             <ImageView
                                 android:id="@+id/imageView"
                                 android:layout_width="match_parent"
@@ -111,19 +112,20 @@
                             android:layout_height="match_parent"
                             android:layout_weight=".45"
                             android:orientation="vertical"
-                            android:background="@drawable/shape">
+                            android:background="@drawable/shape"
+                            android:id="@+id/layoutConRPI">
                             <ImageView
                                 android:id="@+id/imageRPI"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="0.40"
-                                android:src="@drawable/rpiIcon" />
+                                android:src="@drawable/rpi_icon" />
                             <ImageView
                                 android:id="@+id/imageRPI2"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="0.35"
-                                android:src="@drawable/wifiIcon" />
+                                android:src="@drawable/wifi_icon" />
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
@@ -176,7 +178,7 @@
                             android:orientation="vertical">
 
                             <Button
-                                android:id="@+id/button3"
+                                android:id="@+id/buttonSettings"
                                 android:layout_width="fill_parent"
                                 android:layout_height="60dp"
                                 android:text="@string/settings"
@@ -189,7 +191,7 @@
                                 android:textColor="@color/black" />
 
                             <Button
-                                android:id="@+id/button4"
+                                android:id="@+id/buttonGuide"
                                 android:layout_width="fill_parent"
                                 android:layout_height="60dp"
                                 android:text="@string/sign_language_guide"
