@@ -1,5 +1,5 @@
 import os
-import openai
+from openai import OpenAI
 import cv2
 import numpy as np
 import mediapipe as mp
@@ -21,7 +21,10 @@ image_width, image_height = 200, 200
 
 # loading environment variables from api.env
 load_dotenv('api.env')
-openai.api_key = os.getenv("OPENAI_API_KEY")
+
+client = OpenAI(
+    api_key=os.environ['OPENAI_API_KEY']
+)
 
 def f1_metric(y_true, y_pred):
     true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
@@ -71,7 +74,7 @@ def correct_typo(word, context_buffer):
     # adding context window for better typo corrections
     context = ' '.join(context_buffer[-5:])  # window size can be adjusted here
 
-    completion = openai.ChatCompletion.create(
+    completion = client.chat.completions.create(
         model="gpt-4-1106-preview",
         messages=[
             {"role": "system", "content": "You correct typos in the last word and return only the last word's correction. Don't add punctuation. If you don't understand the last word, just return the original last word. Nothing else."},
