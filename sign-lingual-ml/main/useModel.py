@@ -154,8 +154,24 @@ while cap.isOpened():
                             context_buffer.pop(0)  
                         
                         # converting the corrected word to speech and playing it
-                        tts = gtts.gTTS(corrected_word, slow=True)
-                        tts.save("output.mp3")
+
+                        # ----------------- Google TTS -----------------
+                        #tts = gtts.gTTS(corrected_word, slow=True)
+                        #tts.save("output.mp3")
+                        # ----------------------------------------------
+
+                        # ----------------- OpenAI TTS -----------------
+                        response = client.audio.speech.create(
+                          model="tts-1",
+                          voice="echo",
+                          response_format="mp3",
+                          speed=0.5,
+                          input= corrected_word
+                        )
+
+                        response.stream_to_file("output.mp3")
+                        # ----------------------------------------------
+                        
                         playsound("output.mp3")
 
                         # adding the corrected word to the corrected_sequence
