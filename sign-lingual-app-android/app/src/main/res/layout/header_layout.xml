@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:background="#586e5e"
     >
+
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="42dp"
             android:layout_height="match_parent"
             android:layout_weight="0.13"
-            android:src="@drawable/sign_s"
-            />
+            android:src="@drawable/sign_s" />
+
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="48dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
-            android:src="@drawable/sign_l"
-            />
-        <TextView
-            android:layout_width="0dp"
+            android:src="@drawable/sign_l" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="112dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:gravity="center"
-            android:text="SignLingual"
-            android:textSize="25dp"
-            />
+            android:layout_weight="1"
+            app:srcCompat="@drawable/sign_lingual_logo" />
 </LinearLayout>
