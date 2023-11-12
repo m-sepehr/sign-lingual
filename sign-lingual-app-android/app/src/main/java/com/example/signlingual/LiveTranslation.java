@@ -1,12 +1,14 @@
 package com.example.signlingual;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -42,6 +44,7 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
         launch = findViewById(R.id.start_translation);
         stop = findViewById(R.id.stop_translation);
         readyReference.setValue(false);
+
 
 
 
@@ -129,6 +132,11 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        toolbar.setBackgroundColor(Color.BLACK);
+        toolbar.setTitle("SignLingual");
+        toolbar.setTitleTextColor(Color.WHITE);
+
         getSupportActionBar().setTitle("SignLingual");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
