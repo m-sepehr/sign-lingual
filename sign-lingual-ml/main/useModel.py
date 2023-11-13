@@ -1,11 +1,57 @@
+import os
+from openai import OpenAI
 import cv2
 import numpy as np
 import mediapipe as mp
 import tensorflow as tf
 from tensorflow.keras import backend as K
+import gtts
+from playsound import playsound
+from dotenv import load_dotenv
+import threading
+import requests
+import time
+
+# Firebase Realtime Database URL
+database_url = "https://signlingual-901cc-default-rtdb.firebaseio.com"
+
+def get_ready_status():
+    """
+    Check the 'ready' key in Firebase and return its value.
+    """
+    # headers = {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'}
+    response = requests.get(f"{database_url}/ready.json")
+    ready_status = response.json()
+    print("Ready status response:", ready_status, "Type:", type(ready_status))  # Debugging print
+    return ready_status
+
+def send_data(corrected_word):
+    """
+    Send a string to the 'sentence' key in Firebase.
+    """
+    sentence = corrected_word
+    response = requests.put(f"{database_url}/sentence.json", json=sentence)
+    print("Sending data response:", response.status_code, response.json())  # Debugging print
+    if response.status_code == 200:
+        print("Data sent to Firebase.")
+    else:
+        print(f"Failed to send data. Status code: {response.status_code}")
 
 # constants
-image_width, image_height = 200, 200  
+image_width, image_height = 200, 200 
+
+# setting the OpenAI API key
+# -----------------------------------------------------------------------
+# create a .env file in the same directory as this file
+# write: OPENAI_API_KEY=<your api key> in the .env file
+# -----------------------------------------------------------------------
+
+# loading environment variables from api.env
+load_dotenv('api.env')
+
+client = OpenAI(
+    api_key=os.environ['OPENAI_API_KEY']
+)
 
 def f1_metric(y_true, y_pred):
     true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
@@ -51,46 +97,154 @@ def predict_asl_letter(landmarks):
     
     return predicted_label, predicted_prob
 
+def correct_typo_play_audio(word):
 
+    global corrected_sequence, context_buffer
+
+    # adding context window for better typo corrections
+    context = ' '.join(context_buffer[-5:])  # window size can be adjusted here
+
+    
+    completion = client.chat.completions.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "You are an autocorrect model. Correct only the last word and output only the last word. Use the previous words (if any) as context. Don't add punctuation. If you don't understand the last word, just return the original last word. Nothing else."},
+            {"role": "user", "content": context + ' ' + word},
+        ],
+        temperature=0.05,
+    )
+    print (completion)
+    # extracting the last word from the completion as a precaution
+    corrected_word = completion.choices[0].message.content.strip().split()[-1]
+    corrected_sequence += corrected_word.upper() + ' '
+    
+    # ----------------- Google TTS -----------------
+    #tts = gtts.gTTS(corrected_word, slow=True)
+    #tts.save("output.mp3")
+    # ----------------------------------------------
+
+    # ----------------- OpenAI TTS -----------------
+    response = client.audio.speech.create(
+    model="tts-1",
+      voice="echo",
+      response_format="mp3",
+      speed=0.8,
+      input= corrected_word
+    )
+
+    response.stream_to_file("output.mp3")
+    # ----------------------------------------------
+
+    playsound("output.mp3")
+    
+    send_data(corrected_word)
+
+    context_buffer.append(corrected_word)  # add the corrected word to the context buffer
+
+    if len(context_buffer) > 5:  # maintaining the last 5 words for context by removing the oldest word
+        context_buffer.pop(0)  
+
+    
+    
+
+# variables to keep track of the current symbol and how many consecutive frames it has appeared in
+current_symbol = None
+previous_symbol = None
+current_symbol_count = 0
+captured_sequence = ""
+capture_threshold = 4  # Number of frames to detect the same symbol before capturing it
+corrected_sequence = ""  # sequence of words after typo correction
+context_buffer = [] # Buffer to hold the sliding window of words for context
 
 # webcam feed
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 200)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 200)
 
-while cap.isOpened():
-    ret, frame = cap.read()
-    if not ret:
-        continue
+def main():
+    global current_symbol, previous_symbol, current_symbol_count, captured_sequence, corrected_sequence, context_buffer
+    while cap.isOpened():
+        
+        ret, frame = cap.read()
+        if not ret:
+            continue
 
-    # flipping frame horizontally
-    frame = cv2.flip(frame, 1)
+        # flipping frame horizontally
+        frame = cv2.flip(frame, 1)
 
-    # converting frame to RGB for Mediapipe
-    rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    results = hands.process(rgb_frame)
-    
-    # If hand landmarks are found, predicting the ASL letter and displaying it
-    if results.multi_hand_landmarks:
-        for hand_landmarks in results.multi_hand_landmarks:
-            predicted_label, predicted_prob = predict_asl_letter(hand_landmarks)
-            
-            # calculating bounding box for the hand
-            x_coords = [landmark.x for landmark in hand_landmarks.landmark]
-            y_coords = [landmark.y for landmark in hand_landmarks.landmark]
-            x_min, x_max = int(min(x_coords) * image_width), int(max(x_coords) * image_width)
-            y_min, y_max = int(min(y_coords) * image_height), int(max(y_coords) * image_height)
+        # converting frame to RGB for Mediapipe
+        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = hands.process(rgb_frame)
 
-            # drawing hand landmarks
-            mp.solutions.drawing_utils.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-            
-            # displaying the predicted ASL letter and probability on the frame next to the hand
-            label_text = f"{predicted_label} ({predicted_prob:.2f}%)"
-            cv2.putText(frame, label_text, (x_max, y_min), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2, cv2.LINE_AA)
+        # If hand landmarks are found, predicting the ASL letter and displaying it
+        if results.multi_hand_landmarks:
+            for hand_landmarks in results.multi_hand_landmarks:
+                predicted_label, predicted_prob = predict_asl_letter(hand_landmarks)
 
-    cv2.imshow("ASL Detection", frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+                # calculating bounding box for the hand
+                x_coords = [landmark.x for landmark in hand_landmarks.landmark]
+                y_coords = [landmark.y for landmark in hand_landmarks.landmark]
+                x_min, x_max = int(min(x_coords) * image_width), int(max(x_coords) * image_width)
+                y_min, y_max = int(min(y_coords) * image_height), int(max(y_coords) * image_height)
 
-cap.release()
-cv2.destroyAllWindows()
+                # drawing hand landmarks
+                mp.solutions.drawing_utils.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+
+                # displaying the predicted ASL letter and probability on the frame next to the hand
+                label_text = f"{predicted_label} ({predicted_prob:.2f}%)"
+                cv2.putText(frame, label_text, (x_max, y_min), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2, cv2.LINE_AA)
+
+                # checking if the current symbol is the same as the previous symbol
+                if predicted_label == current_symbol:
+                    current_symbol_count += 1
+                else:
+                    current_symbol = predicted_label
+                    current_symbol_count = 1
+
+                 # if the symbol has been detected consistently, add it to the captured sequence
+                if current_symbol_count == capture_threshold and current_symbol != previous_symbol: # avoiding adding the same symbol twice (right now only 1 unique letter captured at a time)
+
+                    if predicted_label == 'space':
+
+                        # if space is detected, taking the last word from captured_sequence and uploading for correction
+                        words = captured_sequence.strip().rsplit(' ', 1)
+
+                        if len(words) > 0:
+                            
+                            # creating a thread to handle the typo correction, audio playback, context buffer update
+                            tts_thread = threading.Thread(target=correct_typo_play_audio, args=(words[-1],))
+                            tts_thread.start()
+
+                        captured_sequence += ' '
+                        previous_symbol = current_symbol
+
+                    # text deletion (to fix)
+                    elif predicted_label == 'del' and len(captured_sequence) > 0:
+
+                        captured_sequence = captured_sequence[:-1]  # remove the last character for "del"
+                        # handle deletion for corrected_sequence
+
+                        if corrected_sequence and corrected_sequence[-1] == ' ':
+                            # remove the last word from corrected_sequence
+                            corrected_sequence = corrected_sequence.rsplit(' ', 2)[0] + ' '
+                        else:
+                            # remove the last character from corrected_sequence
+                            corrected_sequence = corrected_sequence[:-1]
+                    else:
+                        captured_sequence += predicted_label  # Append the detected symbol
+                        previous_symbol = current_symbol
+                    # resetting the counter after adding or deleting the symbol
+                    current_symbol_count = 0
+
+        # displaying the captured sequence on the frame
+        cv2.putText(frame, f"Captured: {captured_sequence}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (147, 20, 255), 2, cv2.LINE_AA)
+        # displaying the corrected sequence on the frame
+        cv2.putText(frame, f"Corrected: {corrected_sequence}", (10, 75), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2, cv2.LINE_AA)
+
+        cv2.imshow("ASL Detection", frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+    cap.release()
+    cv2.destroyAllWindows()
+
+main()
