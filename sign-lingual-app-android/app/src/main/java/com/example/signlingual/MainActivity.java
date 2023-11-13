@@ -20,21 +20,13 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 
-import android.widget.Toast;
 
-
-import android.view.Surface;
 import android.view.View;
 import android.widget.Button;
 
 import com.erkutaras.showcaseview.ShowcaseManager;
-import android.widget.ImageView;
+
 import android.widget.LinearLayout;
-import android.widget.Toast;
-import android.Manifest;
-import com.chaquo.python.PyObject;
-import com.chaquo.python.Python;
-import com.chaquo.python.android.AndroidPlatform;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -44,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private Button buttonSettings, buttonGuide;
     private LinearLayout layoutStandalone, layoutConRPI;
-    private Button btn_raspPi, btn_stndAlone;
     private boolean startTutorial;
     private static final String tutString = "startTutorial";
 
@@ -84,43 +75,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
-        buttonSettings = findViewById(R.id.buttonSettings);
-        buttonGuide = findViewById(R.id.buttonGuide);
-        layoutStandalone = findViewById(R.id.layoutStandalone);
-        layoutConRPI = findViewById(R.id.layoutConRPI);
 
-        buttonSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        buttonGuide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LiveTranslation.class);
-                startActivity(intent);
-            }
-        });
-
-        layoutStandalone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        layoutConRPI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LiveTranslation.class); //LiveTranslation
-                startActivity(intent);
-            }
-        });
-
+        setButtons();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -128,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setTitle("SignLingual");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setButtons();
     }
 
 
@@ -192,10 +147,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setButtons() {
-        btn_raspPi = findViewById(R.id.button3);
-        btn_stndAlone = findViewById(R.id.button4);
+        buttonSettings = findViewById(R.id.buttonSettings);
+        buttonGuide = findViewById(R.id.buttonGuide);
+        layoutStandalone = findViewById(R.id.layoutStandalone);
+        layoutConRPI = findViewById(R.id.layoutConRPI);
 
-        //TODO: Set up the button listeners.
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonGuide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LiveTranslation.class);
+                startActivity(intent);
+            }
+        });
+
+        layoutStandalone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        layoutConRPI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LiveTranslation.class); //LiveTranslation
+                startActivity(intent);
+            }
+        });
     }
 
     private void addPoint(ShowcaseManager.Builder builder, Context context, String key, View view, String shape, String title, String text) {
@@ -225,14 +212,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         addPoint(builder,
                 MainActivity.this,
                 "Connect",
-                btn_raspPi,
+                layoutConRPI,
                 "roundtangle",
                 "Connect",
                 "With this button you can connect to a near Raspberry Pi.");
         addPoint(builder,
                 MainActivity.this,
                 "StandAlone",
-                btn_stndAlone,
+                layoutStandalone,
                 "roundtangle",
                 "Continue",
                 "Continue without connecting to external device");
