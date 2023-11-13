@@ -28,43 +28,191 @@
             android:layout_height="match_parent"
             android:background="@android:color/white">
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="357dp"
-                android:layout_height="86dp"
-                android:fontFamily="sans-serif-smallcaps"
-                android:text="Detect, Transcribe, Speak with Sign Language"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/button3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.197" />
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="341dp"
-                android:layout_height="58dp"
-                android:layout_marginBottom="68dp"
-                android:text=" Connect to Raspberry Pi "
-                app:layout_constraintBottom_toTopOf="@+id/button4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:rippleColor="#F3EFEF" />
-
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="333dp"
-                android:layout_height="57dp"
-                android:layout_marginBottom="144dp"
-                android:text="Standalone Mode"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.15">
+                    <TextView
+                        android:id="@+id/textHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/mainHeader"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="25dp"
+                        android:padding="5dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.55">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                       >
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".03"
+                            android:orientation="vertical">
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".45"
+                            android:background="@drawable/shape"
+                            android:orientation="vertical"
+                            android:id="@+id/layoutStandalone">
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.75"
+                                android:src="@drawable/handtrack" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight=".25"
+                                android:background="@drawable/shape2"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:id="@+id/textStandaloneMode"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/standalone_mode"
+                                    android:textColor="@color/black" />
+
+                                <TextView
+                                    android:id="@+id/textStandaloneMode2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Use App to translate sign"
+                                    android:textColor="@color/black"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".03"
+                            android:orientation="vertical">
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".45"
+                            android:orientation="vertical"
+                            android:background="@drawable/shape"
+                            android:id="@+id/layoutConRPI">
+                            <ImageView
+                                android:id="@+id/imageRPI"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.40"
+                                android:src="@drawable/rpi_icon" />
+                            <ImageView
+                                android:id="@+id/imageRPI2"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.35"
+                                android:src="@drawable/wifi_icon" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight=".25"
+                                android:background="@drawable/shape2"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:id="@+id/textConRPI"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/connect_to_raspberri_pi"
+                                    android:textColor="@color/black" />
+
+                                <TextView
+                                    android:id="@+id/textCommand"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/send_command_to_raspberry_pi"
+                                    android:textColor="@color/black"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".03"
+                            android:orientation="vertical">
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.3"
+                    android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.1">
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="0.8">
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/buttonSettings"
+                                android:layout_width="fill_parent"
+                                android:layout_height="60dp"
+                                android:text="@string/settings"
+                                app:rippleColor="#F3EFEF"
+                                android:drawableLeft="@drawable/cogsettings"/>
+                            <TextView
+                                android:id="@+id/empty"
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:textColor="@color/black" />
+
+                            <Button
+                                android:id="@+id/buttonGuide"
+                                android:layout_width="fill_parent"
+                                android:layout_height="60dp"
+                                android:text="@string/sign_language_guide"
+                                android:drawableLeft="@android:drawable/ic_menu_search"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1">
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
+
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
