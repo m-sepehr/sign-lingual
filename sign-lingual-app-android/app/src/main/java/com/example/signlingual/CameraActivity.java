@@ -14,7 +14,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.media.Image;
@@ -30,10 +29,6 @@ import android.Manifest;
 
 import com.erkutaras.showcaseview.ShowcaseManager;
 import com.google.android.material.navigation.NavigationView;
-import com.google.mediapipe.components.CameraHelper;
-import com.google.mediapipe.framework.AndroidAssetUtil;
-import com.google.mediapipe.solutioncore.ImageSolutionBase;
-import com.google.mediapipe.solutions.hands.Hands;
 
 public class CameraActivity extends AppCompatActivity implements ImageReader.OnImageAvailableListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -188,7 +183,7 @@ public class CameraActivity extends AppCompatActivity implements ImageReader.OnI
             params.putString("message", "User navigated to Home");
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
-        } else if (itemID == R.id.page1) {
+        } else if (itemID == R.id.camera) {
             params.putString("message", "User navigated to Page 1");
             Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
             startActivity(intent);

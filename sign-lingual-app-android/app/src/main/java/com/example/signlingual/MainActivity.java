@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             params.putString("message", "User navigated to Home");
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
-        } else if (itemID == R.id.page1) {
+        } else if (itemID == R.id.camera) {
             params.putString("message", "User navigated to Page 1");
             Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
             startActivity(intent);
@@ -223,7 +223,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 "roundtangle",
                 "Continue",
                 "Continue without connecting to external device");
-
+        addPoint(builder,
+                MainActivity.this,
+                "settingsButton",
+                buttonSettings,
+                "roundtangle",
+                "Settings",
+                "Go to the Settings Menu");
+        addPoint(builder,
+                MainActivity.this,
+                "buttonGuide",
+                buttonGuide,
+                "roundtangle",
+                "Sign Language Guide",
+                "You can access the Sign Language guide here. The guide will show how the application interprets the hand signs.");
         addPoint(builder,
                 MainActivity.this,
                 "Toolbar",

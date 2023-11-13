@@ -2,7 +2,6 @@ package com.example.signlingual;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -23,14 +22,11 @@ import android.widget.TextView;
 
 import com.erkutaras.showcaseview.ShowcaseManager;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 public class LiveTranslation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     String message = "";
@@ -167,7 +163,7 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
             params.putString("message", "User navigated to Home");
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
-        } else if (itemID == R.id.page1) {
+        } else if (itemID == R.id.camera) {
             params.putString("message", "User navigated to Page 1");
             Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
             startActivity(intent);

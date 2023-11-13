@@ -9,7 +9,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -60,7 +59,7 @@ public class StandaloneActivity extends AppCompatActivity implements NavigationV
             params.putString("message", "User navigated to Home");
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
-        } else if (itemID == R.id.page1) {
+        } else if (itemID == R.id.camera) {
             params.putString("message", "User navigated to Page 1");
             Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
             startActivity(intent);
