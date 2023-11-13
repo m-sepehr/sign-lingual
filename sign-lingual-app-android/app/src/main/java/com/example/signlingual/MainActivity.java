@@ -152,36 +152,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         layoutStandalone = findViewById(R.id.layoutStandalone);
         layoutConRPI = findViewById(R.id.layoutConRPI);
 
-        buttonSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(intent);
-            }
+        buttonSettings.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
         });
 
-        buttonGuide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LiveTranslation.class);
-                startActivity(intent);
-            }
+        buttonGuide.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), LiveTranslation.class);
+            startActivity(intent);
         });
 
-        layoutStandalone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
-                startActivity(intent);
-            }
+        layoutStandalone.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
+            startActivity(intent);
         });
 
-        layoutConRPI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LiveTranslation.class); //LiveTranslation
-                startActivity(intent);
-            }
+        layoutConRPI.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), LiveTranslation.class); //LiveTranslation
+            startActivity(intent);
         });
     }
 

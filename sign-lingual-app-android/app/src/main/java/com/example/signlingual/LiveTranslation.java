@@ -93,29 +93,23 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
 
 
 
-        launch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                launch.setClickable(false);
-                launch.setVisibility(View.INVISIBLE);
-                stop.setClickable(true);
-                stop.setVisibility(View.VISIBLE);
-                readyReference.setValue(true);
+        launch.setOnClickListener(view -> {
+            launch.setClickable(false);
+            launch.setVisibility(View.INVISIBLE);
+            stop.setClickable(true);
+            stop.setVisibility(View.VISIBLE);
+            readyReference.setValue(true);
 
 
-            }
         });
-        stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                launch.setClickable(true);
-                launch.setVisibility(View.VISIBLE);
-                stop.setVisibility(View.INVISIBLE);
-                stop.setClickable(false);
-                readyReference.setValue(false);
+        stop.setOnClickListener(view -> {
+            launch.setClickable(true);
+            launch.setVisibility(View.VISIBLE);
+            stop.setVisibility(View.INVISIBLE);
+            stop.setClickable(false);
+            readyReference.setValue(false);
 
 
-            }
         });
 
         SharedPreferences shared = getSharedPreferences("AppSharedPreferences", Context.MODE_PRIVATE);
