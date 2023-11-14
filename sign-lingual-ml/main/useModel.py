@@ -128,7 +128,7 @@ def correct_typo_play_audio(word):
     model="tts-1",
       voice="echo",
       response_format="mp3",
-      speed=0.8,
+      speed=1,
       input= corrected_word
     )
 
@@ -137,7 +137,7 @@ def correct_typo_play_audio(word):
 
     playsound("output.mp3")
     
-    send_data(corrected_word)
+    send_data(corrected_word.lower())
 
     context_buffer.append(corrected_word)  # add the corrected word to the context buffer
 
