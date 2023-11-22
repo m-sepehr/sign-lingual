@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import android.widget.TextView;
+import android.widget.Toast;
 
 import android.view.View;
 import android.widget.Button;
@@ -18,14 +20,17 @@ public class MainActivity extends BaseActivity {
 
     private Button buttonSettings, buttonGuide;
     private LinearLayout layoutStandalone, layoutConRPI;
+    private boolean isNightMode;
+    private TextView NightModeTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setupUI();
         loadPreferences();
+        setupUI();
+
     }
 
 
@@ -36,6 +41,23 @@ public class MainActivity extends BaseActivity {
         buttonGuide = findViewById(R.id.buttonGuide);
         layoutStandalone = findViewById(R.id.layoutStandalone);
         layoutConRPI = findViewById(R.id.layoutConRPI);
+
+        NightModeTest = findViewById(R.id.empty);
+
+        NightModeTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isNightMode) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    isNightMode = false;
+                    Toast.makeText(MainActivity.this, "Night Mode OFF", Toast.LENGTH_LONG).show();
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    isNightMode = true;
+                    Toast.makeText(MainActivity.this, "Night Mode ON", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +93,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void loadPreferences() {
+        // Night Mode
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
+            isNightMode = false;
+        } else {
+            isNightMode = true;
+        }
         // Set Language Configs. Check Android version for implementing backwards compatibility
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             LocaleListCompat locales = AppCompatDelegate.getApplicationLocales();

@@ -12,21 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:id="@+id/toolbar"
-            android:elevation="4dp"
-            android:background="@color/base"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:popupTheme="@style/Theme.AppCompat.Light"
-            />
+
+        <include layout="@layout/toolbar"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white">
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,7 +39,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="@string/mainHeader"
-                        android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="25dp"
                         android:padding="5dp"/>
@@ -91,14 +83,13 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="@string/standalone_mode"
-                                    android:textColor="@color/black" />
+                                    />
 
                                 <TextView
                                     android:id="@+id/textStandaloneMode2"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Use App to translate sign"
-                                    android:textColor="@color/black"
+                                    android:text="@string/stand_alone_2"
                                     />
                             </LinearLayout>
                         </LinearLayout>
@@ -138,14 +129,13 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="@string/connect_to_raspberri_pi"
-                                    android:textColor="@color/black" />
+                                    />
 
                                 <TextView
                                     android:id="@+id/textCommand"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="@string/send_command_to_raspberry_pi"
-                                    android:textColor="@color/black"
                                     />
                             </LinearLayout>
                         </LinearLayout>
@@ -184,19 +174,19 @@
                                 android:layout_height="60dp"
                                 android:text="@string/settings"
                                 app:rippleColor="#F3EFEF"
-                                android:drawableLeft="@drawable/cogsettings"/>
+                                android:drawableLeft="@drawable/settings_24px"/>
                             <TextView
                                 android:id="@+id/empty"
                                 android:layout_width="match_parent"
                                 android:layout_height="20dp"
-                                android:textColor="@color/black" />
+                                />
 
                             <Button
                                 android:id="@+id/buttonGuide"
                                 android:layout_width="fill_parent"
                                 android:layout_height="60dp"
                                 android:text="@string/sign_language_guide"
-                                android:drawableLeft="@android:drawable/ic_menu_search"/>
+                                android:drawableLeft="@drawable/search_24px"/>
 
                         </LinearLayout>
 
@@ -221,7 +211,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_layout"
-        app:itemTextColor="@android:color/darker_gray"
         app:menu="@menu/drawer_menu"
         tools:visibility="gone" />
 

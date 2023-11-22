@@ -8,4 +8,36 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="base">#586e5e</color>
+    <color name="darker_gray">#AAAAAA</color>
+    <color name="gray">#DDDDDD</color>
+    <!-- App Palette -->
+    <!-- Palette 1 -->
+    <color name="night">#0F0F0F</color>
+    <color name="prussian_blue">#232D3F</color>
+    <color name="castleton_green">#005B41</color>
+    <color name="pine_green">#008170</color>
+    <!-- Palette 2 -->
+    <color name="rich_black">#040D12</color>
+    <color name="dark_slate_gray">#183D3D</color>
+    <color name="hookers_green">#5C8374</color>
+    <color name="cambridge_blue">#93B1A6</color>
+    <!-- Palette 3 -->
+    <color name="international_klein_blue">#3D30A2</color>
+    <color name="amethyst">#B15EFF</color>
+    <color name="orange_peel">#FFA33C</color>
+    <color name="icterine">#FFFB73</color>
+    <!-- Palette 4 -->
+    <color name="pine_green_2">#186F65</color>
+    <color name="olivine">#B5CB99</color>
+    <color name="peach_yellow">#FCE09B</color>
+    <color name="redwood">#B2533E</color>
+    <!-- Palette 5 -->
+    <color name="isabeline">#F6F1E9</color>
+    <color name="mustard">#FFD93D</color>
+    <color name="ut_orange">#FF8400</color>
+    <color name="seal_brown">#4F200D</color>
+    <!-- Extras -->
+    <color name="dun">#E1D2B7</color>
+    <color name="tiffany_blue">#B6E0D1</color>
+    <color name="ash_gray">#CAD8C8</color>
 </resources>
