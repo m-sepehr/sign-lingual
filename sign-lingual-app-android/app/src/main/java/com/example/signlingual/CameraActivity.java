@@ -2,17 +2,10 @@ package com.example.signlingual;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.media.ImageReader;
@@ -20,19 +13,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
-import android.view.MenuItem;
 import android.view.Surface;
 import android.Manifest;
-import com.google.android.material.navigation.NavigationView;
-import com.google.mediapipe.components.CameraHelper;
-import com.google.mediapipe.framework.AndroidAssetUtil;
-import com.google.mediapipe.solutioncore.ImageSolutionBase;
-import com.google.mediapipe.solutions.hands.Hands;
 
-public class CameraActivity extends AppCompatActivity implements ImageReader.OnImageAvailableListener, NavigationView.OnNavigationItemSelectedListener {
-
-    private NavigationView navigationView;
-    private DrawerLayout drawerLayout;
+public class CameraActivity extends BaseActivity implements ImageReader.OnImageAvailableListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,60 +105,7 @@ public class CameraActivity extends AppCompatActivity implements ImageReader.OnI
         imageReader.acquireLatestImage().close();
     }
 
-    private void setupUI() {
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigationView);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("SignLingual");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    protected void setupUI() {
+        super.setupUI();
     }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int itemID = item.getItemId();
-        if (itemID == android.R.id.home) {
-            if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-//                Toast.makeText(CameraActivity.this, "inside", Toast.LENGTH_SHORT).show();
-            } else {
-                drawerLayout.openDrawer(GravityCompat.START);
-//                Toast.makeText(CameraActivity.this, "else", Toast.LENGTH_SHORT).show();
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int itemID = item.getItemId();
-        Bundle params = new Bundle();  // Create a bundle to hold parameters
-
-        if (itemID == R.id.navHome) {
-            params.putString("message", "User navigated to Home");
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        } else if (itemID == R.id.page1) {
-            params.putString("message", "User navigated to Page 1");
-            Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
-            startActivity(intent);
-        } else if (itemID == R.id.settings) {
-            params.putString("message", "User navigated to Settings");
-            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(intent);
-        }else if (itemID == R.id.liveTranslation) {
-            params.putString("message", "User navigated to Live Translation");
-            Intent intent = new Intent(getApplicationContext(), LiveTranslation.class);
-            startActivity(intent);
-        } else if (itemID == R.id.standaloneMode) {
-            params.putString("message", "User navigated to Standalone");
-            Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
-            startActivity(intent);
-        }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
 }
