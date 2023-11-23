@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import mediapipe as mp
 import tflite_runtime.interpreter as tflite
+from tflite_runtime.interpreter import load_delegate
 
 # constants
 image_width, image_height = 200, 200
@@ -20,7 +21,7 @@ def f1_metric(y_true, y_pred):
 # --------------- change the file path to the model you want to use ----------------
 interpreter = tflite.Interpreter(
     model_path="../models/asl_landmark_detection_model_mediapipe_edgetpu.tflite",
-    experimental_delegates=[tflite('libedgetpu.so.1')]
+    experimental_delegates=[load_delegate('libedgetpu.so.1')]
 )
 interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
