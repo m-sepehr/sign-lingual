@@ -18,7 +18,10 @@ def f1_metric(y_true, y_pred):
 
 # loading the TFLite model
 # --------------- change the file path to the model you want to use ----------------
-interpreter = tflite.Interpreter(model_path="../models/asl_landmark_detection_model_mediapipe.tflite")
+interpreter = tflite.Interpreter(
+    model_path="../models/asl_landmark_detection_model_mediapipe_edgetpu.tflite",
+    experimental_delegates=[tflite('libedgetpu.so.1')]
+)
 interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
