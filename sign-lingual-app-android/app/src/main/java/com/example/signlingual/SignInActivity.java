@@ -17,9 +17,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignInActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    //get the instance of the database
+    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+
     private EditText emailInput;
     private EditText passwordInput;
     private Button signInButton;
@@ -97,6 +102,9 @@ public class SignInActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            DatabaseReference userRef = mDatabase.getReference("users").child(user.getUid());
+                            userRef.child("ready").setValue(false);
+                            userRef.child("sentence").setValue("");
                             sendEmailVerification();
                             Toast.makeText(SignInActivity.this, "Email verification sent, Please verify", Toast.LENGTH_SHORT).show();
 
@@ -129,8 +137,10 @@ public class SignInActivity extends AppCompatActivity {
     private void reload() { }
 
     private void updateUI(FirebaseUser user) {
-        if(user != null) {
+        if (user != null) {
+            String userID = user.getUid();
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("userID", userID); // Pass the userID as an extra
             startActivity(intent);
         }
     }
