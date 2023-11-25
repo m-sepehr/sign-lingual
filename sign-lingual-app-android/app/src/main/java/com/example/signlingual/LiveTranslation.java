@@ -30,6 +30,9 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
     String message="";
     TextView conversation;
     Button launch, stop;
+    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference readyReference;
+
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private boolean readable = false;
@@ -38,8 +41,10 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_translation);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("sentence");
-        DatabaseReference readyReference = FirebaseDatabase.getInstance().getReference().child("ready");
+        String userID = getIntent().getStringExtra("userID");
+        DatabaseReference userRef = mDatabase.getReference("users").child(userID);
+        DatabaseReference databaseReference = userRef.child("sentence");
+        readyReference = userRef.child("ready");
         conversation = findViewById(R.id.text_translated);
         launch = findViewById(R.id.start_translation);
         stop = findViewById(R.id.stop_translation);
@@ -156,7 +161,6 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
         return true;
     }
 
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int itemID = item.getItemId();
         Bundle params = new Bundle();  // Create a bundle to hold parameters
@@ -164,18 +168,37 @@ public class LiveTranslation extends AppCompatActivity implements NavigationView
         if (itemID == R.id.navHome) {
             params.putString("message", "User navigated to Home");
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            String userID = getIntent().getStringExtra("userID");
+            intent.putExtra("userID", userID); // Pass the userID as an extra
+            readyReference.setValue(false);
             startActivity(intent);
         } else if (itemID == R.id.page1) {
             params.putString("message", "User navigated to Page 1");
             Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+            String userID = getIntent().getStringExtra("userID");
+            intent.putExtra("userID", userID); // Pass the userID as an extra
+            readyReference.setValue(false);
             startActivity(intent);
         } else if (itemID == R.id.settings) {
             params.putString("message", "User navigated to Settings");
-            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            String userID = getIntent().getStringExtra("userID");
+            Intent intent = new Intent(this, SettingsActivity.class);
+            intent.putExtra("userID", userID); // Pass the userID as an extra
+            readyReference.setValue(false);
             startActivity(intent);
         }else if (itemID == R.id.liveTranslation) {
             params.putString("message", "User navigated to Live Translation");
             Intent intent = new Intent(getApplicationContext(), LiveTranslation.class);
+            String userID = getIntent().getStringExtra("userID");
+            intent.putExtra("userID", userID); // Pass the userID as an extra
+            readyReference.setValue(false);
+            startActivity(intent);
+        } else if (itemID == R.id.standaloneMode) {
+            params.putString("message", "User navigated to Standalone");
+            Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
+            String userID = getIntent().getStringExtra("userID");
+            intent.putExtra("userID", userID); // Pass the userID as an extra
+            readyReference.setValue(false);
             startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
