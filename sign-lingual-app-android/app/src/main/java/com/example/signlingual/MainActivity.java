@@ -124,22 +124,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (itemID == R.id.navHome) {
             params.putString("message", "User navigated to Home");
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            String userID = getIntent().getStringExtra("userID");
+            intent.putExtra("userID", userID); // Pass the userID as an extra
             startActivity(intent);
         } else if (itemID == R.id.page1) {
             params.putString("message", "User navigated to Page 1");
             Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+            String userID = getIntent().getStringExtra("userID");
+            intent.putExtra("userID", userID); // Pass the userID as an extra
             startActivity(intent);
         } else if (itemID == R.id.settings) {
             params.putString("message", "User navigated to Settings");
-            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(intent);
+                String userID = getIntent().getStringExtra("userID");
+                Intent intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra("userID", userID); // Pass the userID as an extra
+                startActivity(intent);
         }else if (itemID == R.id.liveTranslation) {
             params.putString("message", "User navigated to Live Translation");
             Intent intent = new Intent(getApplicationContext(), LiveTranslation.class);
+            String userID = getIntent().getStringExtra("userID");
+            intent.putExtra("userID", userID); // Pass the userID as an extra
             startActivity(intent);
         } else if (itemID == R.id.standaloneMode) {
             params.putString("message", "User navigated to Standalone");
             Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
+            String userID = getIntent().getStringExtra("userID");
+            intent.putExtra("userID", userID); // Pass the userID as an extra
             startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
