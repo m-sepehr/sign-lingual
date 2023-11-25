@@ -151,6 +151,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             String userID = getIntent().getStringExtra("userID");
             intent.putExtra("userID", userID); // Pass the userID as an extra
             startActivity(intent);
+        } else if (itemID == R.id.LogOut) {
+            params.putString("message", "User signed out");
+            Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+            startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

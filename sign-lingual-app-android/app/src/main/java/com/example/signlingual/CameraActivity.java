@@ -172,6 +172,10 @@ public class CameraActivity extends AppCompatActivity implements ImageReader.OnI
             params.putString("message", "User navigated to Standalone");
             Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
             startActivity(intent);
+        } else if (itemID == R.id.LogOut) {
+            params.putString("message", "User signed out");
+            Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+            startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
