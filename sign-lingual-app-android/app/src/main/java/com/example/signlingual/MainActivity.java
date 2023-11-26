@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         buttonGuide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LiveTranslation.class);
+                Intent intent = new Intent(getApplicationContext(), GuideActivity.class);
                 startActivity(intent);
             }
         });

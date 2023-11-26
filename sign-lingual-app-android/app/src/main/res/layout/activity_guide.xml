@@ -31,7 +31,7 @@
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_A" />
+                android:src="@drawable/sign_language_a" />
 
             <ImageView
                 android:id="@+id/LetterB"
@@ -39,175 +39,175 @@
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_B" />
+                android:src="@drawable/sign_language_b" />
             <ImageView
                 android:id="@+id/LetterC"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_C" />
+                android:src="@drawable/sign_language_c" />
             <ImageView
                 android:id="@+id/LetterD"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_D" />
+                android:src="@drawable/sign_language_d" />
             <ImageView
                 android:id="@+id/LetterE"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_E" />
+                android:src="@drawable/sign_language_e" />
             <ImageView
                 android:id="@+id/LetterF"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_F" />
+                android:src="@drawable/sign_language_f" />
             <ImageView
                 android:id="@+id/LetterG"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_G" />
+                android:src="@drawable/sign_language_g" />
             <ImageView
                 android:id="@+id/LetterH"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_H" />
+                android:src="@drawable/sign_language_h" />
             <ImageView
                 android:id="@+id/LetterI"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_I" />
+                android:src="@drawable/sign_language_i" />
             <ImageView
                 android:id="@+id/LetterJ"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_J" />
+                android:src="@drawable/sign_language_j" />
             <ImageView
                 android:id="@+id/LetterK"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_K" />
+                android:src="@drawable/sign_language_k" />
             <ImageView
                 android:id="@+id/LetterL"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_L" />
+                android:src="@drawable/sign_language_l" />
             <ImageView
                 android:id="@+id/LetterM"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_M" />
+                android:src="@drawable/sign_language_m" />
             <ImageView
                 android:id="@+id/LetterN"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_N" />
+                android:src="@drawable/sign_language_n" />
             <ImageView
                 android:id="@+id/LetterO"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_O" />
+                android:src="@drawable/sign_language_o" />
             <ImageView
                 android:id="@+id/LetterP"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_P" />
+                android:src="@drawable/sign_language_p" />
             <ImageView
                 android:id="@+id/LetterQ"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_Q" />
+                android:src="@drawable/sign_language_q" />
             <ImageView
                 android:id="@+id/LetterR"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_R" />
+                android:src="@drawable/sign_language_r" />
             <ImageView
                 android:id="@+id/LetterS"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_S" />
+                android:src="@drawable/sign_language_s" />
             <ImageView
                 android:id="@+id/LetterT"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_T" />
+                android:src="@drawable/sign_language_t" />
             <ImageView
                 android:id="@+id/LetterU"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_U" />
+                android:src="@drawable/sign_language_u" />
             <ImageView
                 android:id="@+id/LetterV"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_V" />
+                android:src="@drawable/sign_language_v" />
             <ImageView
                 android:id="@+id/LetterW"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_W" />
+                android:src="@drawable/sign_language_w" />
             <ImageView
                 android:id="@+id/LetterX"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_X" />
+                android:src="@drawable/sign_language_x" />
             <ImageView
                 android:id="@+id/LetterY"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_Y" />
+                android:src="@drawable/sign_language_y" />
             <ImageView
                 android:id="@+id/LetterZ"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:src="@drawable/Sign_language_Z" />
+                android:src="@drawable/sign_language_z" />
         </GridLayout>
     </LinearLayout>
 
