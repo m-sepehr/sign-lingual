@@ -23,7 +23,7 @@ public class LocaleConfig {
     private String currentSign;
 
     Resources resources;
-    LocaleConfig(Resources resources) {
+    public LocaleConfig(Resources resources) {
         this.resources = resources;
         getLangPreferenceDropdownEntries();
         //TODO: Pull current languages so app starts with selected language
@@ -44,9 +44,7 @@ public class LocaleConfig {
                     }
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (XmlPullParserException e) {
+        } catch (IOException | XmlPullParserException e) {
             throw new RuntimeException(e);
         }
         return LocaleListCompat.forLanguageTags(String.join(",", tagsList));
