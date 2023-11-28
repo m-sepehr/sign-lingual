@@ -19,7 +19,6 @@ import com.google.android.material.navigation.NavigationView;
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected NavigationView navigationView;
     protected DrawerLayout drawerLayout;
-    private Bundle user_ID = new Bundle();
     protected static String userID; // static variable to store userId
     SharedPreferences preferences;
 
@@ -49,10 +48,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (itemID == android.R.id.home) {
             if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
-//                Toast.makeText(MainActivity.this, "inside", Toast.LENGTH_SHORT).show();
             } else {
                 drawerLayout.openDrawer(GravityCompat.START);
-//                Toast.makeText(MainActivity.this, "else", Toast.LENGTH_SHORT).show();
             }
         }
         return true;
