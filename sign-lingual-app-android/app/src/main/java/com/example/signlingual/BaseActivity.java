@@ -27,22 +27,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Retrieve the Bundle from the Intent
-        handleIntent(getIntent());
-//        setupUI();
     }
 
-    private void handleIntent(Intent intent) {
-        if (intent != null) {
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                 userID = extras.getString("userID");
-                if (userID != null) {
-                    user_ID.putString("userID", userID);
-                }
-            }
-        }
-    }
 
     protected void setupUI() {
         drawerLayout = findViewById(R.id.drawer_layout);
