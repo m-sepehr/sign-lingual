@@ -75,6 +75,7 @@ public class SignInActivity extends BaseActivity {
                                 String userID = user.getUid();
                                 //store the userID in shared preferences
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putBoolean("isLoggedIn", true);
                                 editor.putString("userID", userID);
                                 editor.apply();
 
@@ -100,6 +101,12 @@ public class SignInActivity extends BaseActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(sharedPreferences.getBoolean("isLoggedIn", false)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
         if(currentUser != null){
             reload();
         }

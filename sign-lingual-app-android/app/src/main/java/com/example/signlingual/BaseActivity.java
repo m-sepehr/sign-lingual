@@ -86,6 +86,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             preferences = getSharedPreferences("Credentials", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.remove("userId");
+            editor.putBoolean("isLoggedIn", false);
             editor.apply();
             startActivity(intent);
         }
