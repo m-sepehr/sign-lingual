@@ -1,23 +1,11 @@
 package com.example.signlingual;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.google.android.material.navigation.NavigationView;
 
-public class GuideActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-
-    private NavigationView navigationView;
-    private DrawerLayout drawerLayout;
+public class GuideActivity extends BaseActivity {
     private ImageView LetterA, LetterB, LetterC, LetterD, LetterE, LetterF, LetterG, LetterH, LetterI, LetterJ;
     private ImageView LetterK, LetterL, LetterM, LetterN, LetterO, LetterP, LetterQ, LetterR, LetterS, LetterT;
     private ImageView LetterU, LetterV, LetterW, LetterX, LetterY, LetterZ;
@@ -29,16 +17,10 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
 
         setupUI();
     }
-    private void setupUI() {
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigationView);
-        navigationView.setNavigationItemSelectedListener(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Sign Language Alphabet");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    protected void setupUI() {
+        super.setupUI();
         LetterA = findViewById(R.id.LetterA);
         LetterB = findViewById(R.id.LetterB);
         LetterC = findViewById(R.id.LetterC);
@@ -71,8 +53,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_a", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_a");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -80,8 +61,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_b", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_b");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -89,8 +69,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_c", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_c");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -98,8 +77,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_d", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_d");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -107,8 +85,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_e", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_e");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -116,8 +93,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_f", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_f");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -125,8 +101,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_g", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_g");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -134,8 +109,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_h", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_h");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -143,8 +117,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_i", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_i");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -152,8 +125,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_j", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_j");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -161,8 +133,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_k", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_k");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -170,8 +141,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_l", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_l");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -179,8 +149,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_m", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_m");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -188,8 +157,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_n", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_n");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -197,8 +165,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_o", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_o");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -206,8 +173,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_p", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_p");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -215,8 +181,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_q", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_q");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -224,8 +189,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_r", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_r");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -233,8 +197,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_s", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_s");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -242,8 +205,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_t", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_t");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -251,8 +213,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_u", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_u");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -260,8 +221,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_v", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_v");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -269,8 +229,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_w", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_w");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -278,8 +237,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_x", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_x");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -287,8 +245,7 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_y", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_y");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
@@ -296,53 +253,10 @@ public class GuideActivity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
-                int imageResourceId = getResources().getIdentifier("sign_language_z", "drawable", getPackageName());
-                GuideDialog dialog = GuideDialog.newInstance(imageResourceId);
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_z");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int itemID = item.getItemId();
-        if (itemID == android.R.id.home) {
-            if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-            } else {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int itemID = item.getItemId();
-        Bundle params = new Bundle();  // Create a bundle to hold parameters
-
-        if (itemID == R.id.navHome) {
-            params.putString("message", "User navigated to Home");
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        } else if (itemID == R.id.page1) {
-            params.putString("message", "User navigated to Page 1");
-            Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
-            startActivity(intent);
-        } else if (itemID == R.id.settings) {
-            params.putString("message", "User navigated to Settings");
-            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(intent);
-        }else if (itemID == R.id.liveTranslation) {
-            params.putString("message", "User navigated to Live Translation");
-            Intent intent = new Intent(getApplicationContext(), LiveTranslation.class);
-            startActivity(intent);
-        } else if (itemID == R.id.standaloneMode) {
-            params.putString("message", "User navigated to Standalone");
-            Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
-            startActivity(intent);
-        }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

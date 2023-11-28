@@ -1,24 +1,21 @@
 package com.example.signlingual;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class GuideDialog extends AppCompatDialogFragment {
-
-    public static GuideDialog newInstance(int imageResourceId) {
+    TextView signLetter;
+    public static GuideDialog newInstance(String imageFileName) {
         GuideDialog fragment = new GuideDialog();
         Bundle args = new Bundle();
-        args.putInt("imageResourceId", imageResourceId);
+        args.putString("imageFileName", imageFileName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -28,8 +25,11 @@ public class GuideDialog extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.activity_guide_dialog, null);
 
         ImageView imageView = view.findViewById(R.id.LetterImage); // Replace with your ImageView ID
-        int imageResourceId = getArguments().getInt("imageResourceId");
+        String fileName = getArguments().getString("imageFileName");
+        int imageResourceId = getResources().getIdentifier(fileName,"drawable", requireContext().getPackageName());
         imageView.setImageResource(imageResourceId);
+        signLetter = view.findViewById(R.id.signLetter);
+        signLetter.setText(String.valueOf(fileName.charAt(fileName.length()-1)).toUpperCase());
 
         builder.setView(view);
         return builder.create();
