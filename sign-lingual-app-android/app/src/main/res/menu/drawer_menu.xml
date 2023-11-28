@@ -7,20 +7,16 @@
             android:title="Home"
             android:icon="@drawable/ic_launcher_foreground"/>
         <item
-            android:id="@+id/page1"
-            android:title="Phone Camera"
-            android:icon="@drawable/ic_launcher_foreground"/>
-        <item
-            android:id="@+id/settings"
-            android:title="Settings"
-            android:icon="@drawable/ic_launcher_foreground"/>
-        <item
             android:id="@+id/liveTranslation"
             android:title="Live Translation"
             android:icon="@drawable/ic_launcher_foreground"/>
         <item
             android:id="@+id/standaloneMode"
             android:title="StandaloneMode"
+            android:icon="@drawable/ic_launcher_foreground"/>
+        <item
+            android:id="@+id/settings"
+            android:title="Settings"
             android:icon="@drawable/ic_launcher_foreground"/>
         <item
             android:id="@+id/LogOut"
