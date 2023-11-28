@@ -3,10 +3,11 @@ package com.example.signlingual;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends BaseActivity {
+    //shared preferences
+    SharedPreferences sharedPreferences;
     private FirebaseAuth mAuth;
     //get the instance of the database
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
@@ -38,6 +41,9 @@ public class SignInActivity extends AppCompatActivity {
         // ...
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        //get the shared preferences
+        sharedPreferences = getSharedPreferences("Credentials", MODE_PRIVATE);
+
 
         //declare variables
         emailInput = findViewById(R.id.emailInput);
@@ -48,6 +54,11 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void signIn(String email, String password) {
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            // Show an error message or toast indicating that email or password is empty
+            Toast.makeText(this, "Email and password cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -59,6 +70,14 @@ public class SignInActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             if(user.isEmailVerified()) {
                                 updateUI(user);
+                                preferences = getSharedPreferences("Credentials", MODE_PRIVATE);
+                                //get the UserID for loggedIn User
+                                String userID = user.getUid();
+                                //store the userID in shared preferences
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("userID", userID);
+                                editor.apply();
+
                             } else {
                                 Toast.makeText(SignInActivity.this, "Please verify your email.",
                                         Toast.LENGTH_SHORT).show();
@@ -93,6 +112,16 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void createAccount(String email, String password) {
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            // Show an error message or toast indicating that email or password is empty
+            Toast.makeText(this, "Email and password cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }else{
+            if(password.length() < 6){
+                Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -137,11 +166,16 @@ public class SignInActivity extends AppCompatActivity {
     private void reload() { }
 
     private void updateUI(FirebaseUser user) {
-        if (user != null) {
-            String userID = user.getUid();
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("userID", userID); // Pass the userID as an extra
-            startActivity(intent);
+        try {
+            if (user != null) {
+                String userID = user.getUid();
+                Intent newIntent = new Intent(this, MainActivity.class);
+                newIntent.putExtra("userID", userID); // Pass the userID as an extra
+                startActivity(newIntent);
+                finish();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Exception in updateUI", e);
         }
     }
 
