@@ -22,6 +22,10 @@
             android:id="@+id/standaloneMode"
             android:title="StandaloneMode"
             android:icon="@drawable/ic_launcher_foreground"/>
+        <item
+            android:id="@+id/LogOut"
+            android:title="LogOut"
+            android:icon="@drawable/ic_launcher_foreground"/>
 
     </group>
 </menu>

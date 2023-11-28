@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.signlingual.LocaleConfig;
+import com.example.signlingual.R;
+
 import java.util.Map;
 
 public class SettingsFragments extends PreferenceFragment {
