@@ -2,10 +2,15 @@ package com.example.signlingual;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+
 import androidx.core.app.ActivityCompat;
 
+
+
 import android.content.Context;
+
 import android.content.pm.PackageManager;
+
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.media.ImageReader;
@@ -13,10 +18,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
+
 import android.view.Surface;
 import android.Manifest;
 
-public class CameraActivity extends BaseActivity implements ImageReader.OnImageAvailableListener {
+public class CameraActivity extends BaseActivity implements ImageReader.OnImageAvailableListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,4 +114,5 @@ public class CameraActivity extends BaseActivity implements ImageReader.OnImageA
     protected void setupUI() {
         super.setupUI();
     }
+
 }

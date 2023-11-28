@@ -2,6 +2,7 @@ package com.example.signlingual;
 
 import androidx.annotation.NonNull;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,19 +19,32 @@ public class LiveTranslation extends BaseActivity {
     String message="";
     TextView conversation;
     Button launch, stop;
+    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference readyReference;
+    DatabaseReference userRef, databaseReference;
+    SharedPreferences sharedPreferences;
+
     private boolean readable = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_live_translation);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("sentence");
-        DatabaseReference readyReference = FirebaseDatabase.getInstance().getReference().child("ready");
-        conversation = findViewById(R.id.text_translated);
-        launch = findViewById(R.id.start_translation);
-        stop = findViewById(R.id.stop_translation);
-        readyReference.setValue(false);
 
+        setContentView(R.layout.activity_live_translation);
+        sharedPreferences = getSharedPreferences("Credentials", MODE_PRIVATE);
+        userID = sharedPreferences.getString("userID", null);
+        if (userID != null) {
+            userRef = mDatabase.getReference("users").child(userID);
+            databaseReference = userRef.child("sentence");
+            readyReference = userRef.child("ready");
+            conversation = findViewById(R.id.text_translated);
+            launch = findViewById(R.id.start_translation);
+            stop = findViewById(R.id.stop_translation);
+            readyReference.setValue(false);
+        }else{
+            Log.d("LiveTranslation", "userID is null");
+            finish();
+        }
 
 
 
@@ -108,7 +122,20 @@ public class LiveTranslation extends BaseActivity {
             }
         });
     }
+    //when leaving app, set the ready in Firebase to false
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Set readyReference to false when the activity is paused
+        if (readyReference != null) {
+            readyReference.setValue(false);
+            launch.setClickable(true);
+            launch.setVisibility(View.VISIBLE);
+            stop.setVisibility(View.INVISIBLE);
+            stop.setClickable(false);
 
+        }
+    }
 
 
     protected void setupUI() {

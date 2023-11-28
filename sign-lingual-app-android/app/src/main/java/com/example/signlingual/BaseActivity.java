@@ -1,8 +1,10 @@
 package com.example.signlingual;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -17,11 +19,15 @@ import com.google.android.material.navigation.NavigationView;
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected NavigationView navigationView;
     protected DrawerLayout drawerLayout;
+    protected static String userID; // static variable to store userId
+    SharedPreferences preferences;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
 
     protected void setupUI() {
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -42,10 +48,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (itemID == android.R.id.home) {
             if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
-//                Toast.makeText(MainActivity.this, "inside", Toast.LENGTH_SHORT).show();
             } else {
                 drawerLayout.openDrawer(GravityCompat.START);
-//                Toast.makeText(MainActivity.this, "else", Toast.LENGTH_SHORT).show();
             }
         }
         return true;
@@ -75,6 +79,14 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else if (itemID == R.id.standaloneMode) {
             params.putString("message", "User navigated to Standalone");
             Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
+            startActivity(intent);
+        }else if (itemID == R.id.LogOut) {//adding the logout and logic behind it
+            params.putString("message", "User signed out");
+            Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+            preferences = getSharedPreferences("Credentials", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.remove("userId");
+            editor.apply();
             startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
