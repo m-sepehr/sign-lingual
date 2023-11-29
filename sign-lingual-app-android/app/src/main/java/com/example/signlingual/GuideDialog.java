@@ -29,8 +29,11 @@ public class GuideDialog extends AppCompatDialogFragment {
         int imageResourceId = getResources().getIdentifier(fileName,"drawable", requireContext().getPackageName());
         imageView.setImageResource(imageResourceId);
         signLetter = view.findViewById(R.id.signLetter);
-        signLetter.setText(String.valueOf(fileName.charAt(fileName.length()-1)).toUpperCase());
-
+        if(fileName == "sign_language_space") {
+            signLetter.setText("SPACE");
+        } else {
+            signLetter.setText(String.valueOf(fileName.charAt(fileName.length() - 1)).toUpperCase());
+        }
         builder.setView(view);
         return builder.create();
     }

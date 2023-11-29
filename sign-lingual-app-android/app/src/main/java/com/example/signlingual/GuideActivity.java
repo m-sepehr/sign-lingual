@@ -8,7 +8,7 @@ import android.widget.ImageView;
 public class GuideActivity extends BaseActivity {
     private ImageView LetterA, LetterB, LetterC, LetterD, LetterE, LetterF, LetterG, LetterH, LetterI, LetterJ;
     private ImageView LetterK, LetterL, LetterM, LetterN, LetterO, LetterP, LetterQ, LetterR, LetterS, LetterT;
-    private ImageView LetterU, LetterV, LetterW, LetterX, LetterY, LetterZ;
+    private ImageView LetterU, LetterV, LetterW, LetterX, LetterY, LetterZ, LetterSpace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,7 @@ public class GuideActivity extends BaseActivity {
         LetterX = findViewById(R.id.LetterX);
         LetterY = findViewById(R.id.LetterY);
         LetterZ = findViewById(R.id.LetterZ);
+        LetterSpace = findViewById(R.id.LetterSpace);
         LetterA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -254,6 +255,14 @@ public class GuideActivity extends BaseActivity {
             public void onClick(View v) {
                 // OPEN IMAGE DIALOG
                 GuideDialog dialog = GuideDialog.newInstance("sign_language_z");
+                dialog.show(getSupportFragmentManager(), "Show Image");
+            }
+        });
+        LetterSpace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // OPEN IMAGE DIALOG
+                GuideDialog dialog = GuideDialog.newInstance("sign_language_space");
                 dialog.show(getSupportFragmentManager(), "Show Image");
             }
         });
