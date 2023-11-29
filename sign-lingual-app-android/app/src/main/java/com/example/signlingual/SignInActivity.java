@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.chaquo.python.android.AndroidPlatform;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,6 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.IOException;
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+
+import org.checkerframework.checker.units.qual.A;
 
 public class SignInActivity extends BaseActivity {
     //shared preferences
@@ -50,7 +57,9 @@ public class SignInActivity extends BaseActivity {
         passwordInput = findViewById(R.id.passwordInput);
         signInButton = findViewById(R.id.signInButton);
         createAccountButton = findViewById(R.id.createAccountButton);
-
+        if(!Python.isStarted()){
+            Python.start(new AndroidPlatform(this));
+        }
     }
 
     private void signIn(String email, String password) {
@@ -82,6 +91,14 @@ public class SignInActivity extends BaseActivity {
                                                 editor.putString("userID", userID);
                                                 editor.apply();
                                                 Log.i("Token", token);
+
+                                                // Initialize Python
+                                                Python python = Python.getInstance();
+                                                PyObject pyObject = python.getModule("network");
+
+                                                // Call the Python function with arguments
+                                                pyObject.callAttr("main", userID, token);
+
                                                 Toast.makeText(SignInActivity.this, "token "+token,
                                                         Toast.LENGTH_SHORT).show();
                                             } else {
@@ -195,6 +212,5 @@ public class SignInActivity extends BaseActivity {
             Log.e(TAG, "Exception in updateUI", e);
         }
     }
-
 
 }
