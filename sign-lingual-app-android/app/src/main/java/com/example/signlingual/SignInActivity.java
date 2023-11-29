@@ -68,18 +68,28 @@ public class SignInActivity extends BaseActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            if(user.isEmailVerified()) {
-                                updateUI(user);
-                                preferences = getSharedPreferences("Credentials", MODE_PRIVATE);
-                                //get the UserID for loggedIn User
-                                String userID = user.getUid();
-                                //store the userID in shared preferences
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putBoolean("isLoggedIn", true);
-                                editor.putString("userID", userID);
-                                editor.apply();
-
-                            } else {
+                            if (user.isEmailVerified()) {
+                                // Get the authentication token
+                                user.getIdToken(true)
+                                        .addOnCompleteListener(tokenTask -> {
+                                            if (tokenTask.isSuccessful()) {
+                                                //getting the token
+                                                String token = tokenTask.getResult().getToken();
+                                                updateUI(user);
+                                                preferences = getSharedPreferences("Credentials", MODE_PRIVATE);
+                                                String userID = user.getUid();
+                                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                editor.putString("userID", userID);
+                                                editor.apply();
+                                                Log.i("Token", token);
+                                                Toast.makeText(SignInActivity.this, "token "+token,
+                                                        Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                // Handle failure to obtain token
+                                                Log.e(TAG, "Failed to obtain authentication token.", tokenTask.getException());
+                                                updateUI(null);
+                                            }
+                                        });} else {
                                 Toast.makeText(SignInActivity.this, "Please verify your email.",
                                         Toast.LENGTH_SHORT).show();
                                 updateUI(null);
