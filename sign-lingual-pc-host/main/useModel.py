@@ -11,16 +11,12 @@ from dotenv import load_dotenv
 import threading
 import requests
 
-# Firebase Realtime Database URL
-userID =''
-database_url = "https://signlingual-901cc-default-rtdb.firebaseio.com/users/" + userID
-
 def get_ready_status():
     """         
     Check the 'ready' key in Firebase and return its value.
     """
     # headers = {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'}
-    response = requests.get(f"{database_url}/ready.json")
+    response = requests.get(f"{database_url}/ready.json?auth=" +  user_token)
     ready_status = response.json()
     print("Ready status response:", ready_status, "Type:", type(ready_status))  # Debugging print
     return ready_status
@@ -32,7 +28,7 @@ def send_data(corrected_word, user_token):
 
     sentence = corrected_word
     
-    response = requests.put(f"{database_url}/sentence.json?auth=" + user_token, json=sentence)
+    response = requests.put(f"{database_url}/sentence.json?auth=" +  user_token, json=sentence)
     print("Sending data response:", response.status_code, response.json())  # Debugging print
     if response.status_code == 200:
         print("Data sent to Firebase.")
@@ -51,9 +47,9 @@ image_width, image_height = 200, 200
 # loading environment variables from api.env
 load_dotenv('api.env')
 # Firebase Realtime Database URL
-user_token = ''
-userID =''
-database_url = "https://signlingual-901cc-default-rtdb.firebaseio.com/users/" + userID
+user_token = ' '
+userID =' '
+database_url = "https://signlingual-901cc-default-rtdb.firebaseio.com/users/" +  userID
 
 client = OpenAI(
     api_key=os.environ['OPENAI_API_KEY']
