@@ -5,6 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignInActivity">
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:src="@drawable/app_icon"-->
+<!--        android:scaleType="centerInside"-->
+<!--        android:scaleX="2.5"-->
+<!--        android:scaleY="2.5"-->
+<!--        android:translationY="50dp"-->
+<!--        android:alpha="0.04"/>-->
 
 
     <ImageView
@@ -15,6 +24,7 @@
         android:layout_marginTop="100dp"
         android:layout_marginEnd="64dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/sign_lingual_logo" />
@@ -32,7 +42,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/passwordInput"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
@@ -49,14 +59,14 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/signInButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailInput" />
 
     <Button
         android:id="@+id/signInButton"
         android:layout_width="180dp"
-        android:layout_height="48dp"
+        android:layout_height="55dp"
         android:layout_marginStart="120dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="120dp"
@@ -64,20 +74,20 @@
         android:text="Sign In"
         app:layout_constraintBottom_toTopOf="@+id/createAccountButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordInput" />
 
     <Button
         android:id="@+id/createAccountButton"
         android:layout_width="180dp"
-        android:layout_height="48dp"
+        android:layout_height="60dp"
         android:layout_marginStart="120dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="120dp"
         android:text="Create Account"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signInButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

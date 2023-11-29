@@ -31,13 +31,16 @@
         </intent-filter>
         </activity>
         <activity
+            android:name=".GuideDialog"
+            android:exported="false" />
+        <activity
+            android:name=".GuideActivity"
+            android:exported="false" />
+        <activity
             android:name=".StandaloneActivity"
             android:exported="false" />
         <activity
             android:name=".LiveTranslation"
-            android:exported="false" />
-        <activity
-            android:name=".CameraActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
