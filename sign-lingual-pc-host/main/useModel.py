@@ -110,7 +110,7 @@ def correct_typo_play_audio(word):
     completion = client.chat.completions.create(
         model="gpt-4",
         messages=[
-            {"role": "system", "content": "You are an autocorrect model. Correct only the last word and output only the last word. Use the previous words (if any) as context. Don't add punctuation. If you don't understand the last word, just return the original last word. Nothing else."},
+            {"role": "system", "content": "You are an autocorrect model named \"sign lingual\". Correct only the last word in the words given to you and output only that last corrected word. Use the previous words (if any) as context. Don't add punctuation. If you don't understand the last word, just return the original last word. Nothing else."},
             {"role": "user", "content": context + ' ' + word},
         ],
         temperature=0.05,
