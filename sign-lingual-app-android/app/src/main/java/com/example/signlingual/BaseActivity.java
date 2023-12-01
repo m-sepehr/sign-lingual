@@ -83,7 +83,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             SharedPreferences.Editor editor = preferences.edit();
             editor.remove("userId");
             editor.putBoolean("isLoggedIn", false);
+            editor.remove("token");
             editor.apply();
+
 
 
 
