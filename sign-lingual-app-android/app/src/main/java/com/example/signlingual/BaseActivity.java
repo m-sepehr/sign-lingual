@@ -37,7 +37,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(Color.BLACK);
-        getSupportActionBar().setTitle("SignLingual");
+        getSupportActionBar().setTitle("sign lingual");
         toolbar.setTitleTextColor(Color.WHITE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

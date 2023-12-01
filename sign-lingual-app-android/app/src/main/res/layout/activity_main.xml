@@ -39,18 +39,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.15">
-                    <TextView
-                        android:id="@+id/textHeader"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@string/mainHeader"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="25dp"
-                        android:padding="5dp"/>
-                </RelativeLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -85,22 +75,19 @@
                                 android:layout_height="0dp"
                                 android:layout_weight=".25"
                                 android:background="@drawable/shape2"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:gravity="center_vertical"> <!-- Add this line -->
+
                                 <TextView
                                     android:id="@+id/textStandaloneMode"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="@string/standalone_mode"
-                                    android:textColor="@color/black" />
-
-                                <TextView
-                                    android:id="@+id/textStandaloneMode2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Use App to translate sign"
                                     android:textColor="@color/black"
-                                    />
+                                    android:textStyle="bold"/>
+
                             </LinearLayout>
+
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="0dp"
@@ -127,27 +114,26 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="0.35"
                                 android:src="@drawable/wifi_icon" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight=".25"
                                 android:background="@drawable/shape2"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:gravity="center_vertical"
+                                > <!-- This line centers the TextView vertically -->
+
                                 <TextView
                                     android:id="@+id/textConRPI"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="@string/connect_to_raspberri_pi"
-                                    android:textColor="@color/black" />
-
-                                <TextView
-                                    android:id="@+id/textCommand"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/send_command_to_raspberry_pi"
                                     android:textColor="@color/black"
-                                    />
+                                    android:textStyle="bold"/>
+
                             </LinearLayout>
+
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="0dp"
