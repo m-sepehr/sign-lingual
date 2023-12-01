@@ -42,7 +42,7 @@ public class networkActivity extends BaseActivity {
                 String password = wifiPassword.getText().toString();
                 String encryptionType = "WPA";
                 String userID = preferences.getString("userID", "default_value");
-                String userToken = preferences.getString("token", "default_value");
+                String userToken = preferences.getString("token", "noToken");
                 Bitmap qrCodeBitmap = generateWifiQRCode(ssid, password, encryptionType, userID, userToken);
                 if (qrCodeBitmap != null) {
                     shareQRCode(qrCodeBitmap);
@@ -53,7 +53,7 @@ public class networkActivity extends BaseActivity {
 
     }
     public Bitmap generateWifiQRCode(String ssid, String password, String encryptionType, String userID, String userToken) {
-        String wifiData = "WIFI:S:" + ssid + "-" + userID + "-" + userToken  + ";T:" + encryptionType + ";P:" + password + ";;";
+        String wifiData = "WIFI:S:" + ssid + "|" + userID + "|" + userToken  + ";T:" + encryptionType + ";P:" + password + ";;";
 
         try {
             QRCodeWriter writer = new QRCodeWriter();
