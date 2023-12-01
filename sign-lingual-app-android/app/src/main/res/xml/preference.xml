@@ -23,16 +23,6 @@
             android:summary="Change displayed language and spoken language"
             android:title="Language"
             android:icon="@drawable/outline_type_specimen_24"/>
-        <SwitchPreference
-            android:key="subtitles"
-            android:summary="Enable Sign to text subtitles"
-            android:title="Enable Subtitles"
-            android:icon="@drawable/outline_lyrics_24"/>
-        <SwitchPreference
-            android:key="enable_voice"
-            android:summary="Enable Sign to speech subtitles"
-            android:title="Enable Voice"
-            android:icon="@drawable/baseline_voice_chat_24"/>
         <ListPreference
             android:dialogTitle="Voice Customization"
             android:enabled="false"

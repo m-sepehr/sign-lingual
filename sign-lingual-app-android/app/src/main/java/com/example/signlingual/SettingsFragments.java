@@ -32,12 +32,10 @@ import java.util.Map;
 public class SettingsFragments extends PreferenceFragment {
     Preference btn_linkDevice,btn_unlinkDevice,btn_tutorial, btn_feedback;
     ListPreference list_language, list_customVoice;
-    SwitchPreference switch_subtitles, switch_enableVoice;
 
     LocaleConfig localeConfig;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     DatabaseReference userRef, ip_address;
-    SharedPreferences preferences;
 
     // On update change to "extends PreferenceFragmentCompat"
     /*
@@ -56,7 +54,6 @@ public class SettingsFragments extends PreferenceFragment {
         localeConfig = new LocaleConfig(getResources());
         findPreferences();
         populatePreferenceLists();
-        setDefaultValues();
         setPreferenceListeners();
     }
 
@@ -69,16 +66,8 @@ public class SettingsFragments extends PreferenceFragment {
         // Find Lists
         list_language = (ListPreference) findPreference("language");
         list_customVoice = (ListPreference) findPreference("custom_voice");
-        // Find Switches
-        switch_subtitles = (SwitchPreference) findPreference("subtitles");
-        switch_enableVoice = (SwitchPreference) findPreference("enable_voice");
     }
 
-    private void setDefaultValues() {
-        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getContext());
-        boolean isVoiceEnabled = preference.getBoolean(switch_enableVoice.getKey(), false);
-        list_customVoice.setEnabled(isVoiceEnabled);
-    }
     private void setPreferenceListeners() {
         // Button Listeners
         btn_linkDevice.setOnPreferenceClickListener(preference -> {
@@ -119,44 +108,7 @@ public class SettingsFragments extends PreferenceFragment {
             return true;
         });
         // Switch Listeners
-        switch_subtitles.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newVal) {
-                if (preference instanceof SwitchPreference) {
-                    boolean value = (Boolean) newVal;
-                    Toast.makeText(getContext(), "Not implemented. Val: " + value, Toast.LENGTH_LONG).show();
-                    // Maybe there is a better way to check.
-                    if (value) {
-                        //TODO: implement subtitles active
-                        // STUB
-                    } else {
 
-                    }
-                }
-                Toast.makeText(getContext(), "Not implemented Yet", Toast.LENGTH_LONG).show();
-                return true;
-            }
-        });
-        switch_enableVoice.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newVal) {
-                if (preference instanceof SwitchPreference) {
-                    boolean value = (Boolean) newVal;
-                    Toast.makeText(getContext(), "Not implemented. Val: " + value, Toast.LENGTH_LONG).show();
-                    // Maybe there is a better way to check.
-                    if (value) {
-                        // I want to make this option disappear, but cannot in the current sdk version
-                        list_customVoice.setEnabled(true);
-
-                        //TODO: implement subtitles active
-                        // STUB
-                    } else {
-                        list_customVoice.setEnabled(false);
-                    }
-                }
-                return true;
-            }
-        });
         // List listeners
 
         list_customVoice.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
