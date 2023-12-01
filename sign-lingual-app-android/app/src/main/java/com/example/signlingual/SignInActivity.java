@@ -99,8 +99,6 @@ public class SignInActivity extends BaseActivity {
                                                 // Call the Python function with arguments
                                                 pyObject.callAttr("main", userID, token);
 
-                                                Toast.makeText(SignInActivity.this, "token "+token,
-                                                        Toast.LENGTH_SHORT).show();
                                             } else {
                                                 // Handle failure to obtain token
                                                 Log.e(TAG, "Failed to obtain authentication token.", tokenTask.getException());
