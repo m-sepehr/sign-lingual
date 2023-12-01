@@ -11,16 +11,6 @@ from dotenv import load_dotenv
 import threading
 import requests
 
-def get_ready_status():
-    """         
-    Check the 'ready' key in Firebase and return its value.
-    """
-    # headers = {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'}
-    response = requests.get(f"{database_url}/ready.json?auth=" +  user_token)
-    ready_status = response.json()
-    print("Ready status response:", ready_status, "Type:", type(ready_status))  # Debugging print
-    return ready_status
-
 def send_data(corrected_word, user_token):
     """
     Send a string to the 'sentence' key in Firebase.
@@ -47,8 +37,8 @@ image_width, image_height = 200, 200
 # loading environment variables from api.env
 load_dotenv('api.env')
 # Firebase Realtime Database URL
-user_token = ' '
-userID =' '
+user_token = os.getenv('TOKEN')
+userID = os.getenv('USERID')
 database_url = "https://signlingual-901cc-default-rtdb.firebaseio.com/users/" +  userID
 
 client = OpenAI(
