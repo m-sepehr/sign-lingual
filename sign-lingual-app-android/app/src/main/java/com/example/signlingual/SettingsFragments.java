@@ -1,6 +1,8 @@
 package com.example.signlingual;
 
 
+import static com.example.signlingual.BaseActivity.userID;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,21 +11,33 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.signlingual.LocaleConfig;
 import com.example.signlingual.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
 
 public class SettingsFragments extends PreferenceFragment {
-    Preference btn_linkDevice, btn_tutorial, btn_feedback;
+    Preference btn_linkDevice,btn_unlinkDevice,btn_tutorial, btn_feedback;
     ListPreference list_language, list_customVoice;
     SwitchPreference switch_subtitles, switch_enableVoice;
 
     LocaleConfig localeConfig;
+    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference userRef, ip_address;
+    SharedPreferences preferences;
 
     // On update change to "extends PreferenceFragmentCompat"
     /*
@@ -36,6 +50,9 @@ public class SettingsFragments extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preference);
 
+
+        userRef = mDatabase.getReference("users").child(userID);
+        ip_address = userRef.child("ip_address");
         localeConfig = new LocaleConfig(getResources());
         findPreferences();
         populatePreferenceLists();
@@ -46,6 +63,7 @@ public class SettingsFragments extends PreferenceFragment {
     private void findPreferences() {
         // Find Buttons
         btn_linkDevice = findPreference("link");
+        btn_unlinkDevice = findPreference("unlink");
         btn_tutorial = findPreference("tutorial");
         btn_feedback = findPreference("feedback");
         // Find Lists
@@ -68,6 +86,26 @@ public class SettingsFragments extends PreferenceFragment {
             startActivity(intent);
             return true;
         });
+
+        btn_unlinkDevice.setOnPreferenceClickListener(preference -> {
+            ip_address.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DataSnapshot snapshot = task.getResult();
+                    if (snapshot.exists()) {
+                        String ip_address_string = snapshot.getValue(String.class);
+                        Log.d("MainActivity", "ip address is: " + ip_address_string);
+                        // Rest of your code using ip_address_string
+                        ip_address.setValue("");
+                        Toast.makeText(getContext(), "Device unlinked", Toast.LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(getContext(), "No device linked", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+            return true; // Assuming you want to consume the click event
+        });
+
         btn_tutorial.setOnPreferenceClickListener(preference -> {
             //TODO: implement Tutorial
             // STUB

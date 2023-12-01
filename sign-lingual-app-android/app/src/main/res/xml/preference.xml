@@ -4,9 +4,14 @@
     <PreferenceCategory android:title="General">
         <Preference
             android:key="link"
-            android:summary="Link to SingLingual device"
+            android:summary="Link to sing lingual device"
             android:title="Link Device"
             android:icon="@drawable/baseline_leak_add_24"/>
+        <Preference
+            android:icon="@android:drawable/ic_delete"
+            android:key="unlink"
+            android:summary="Unlink the current sing lingual device"
+            android:title="Unlink Device" />
 
     </PreferenceCategory>
 
