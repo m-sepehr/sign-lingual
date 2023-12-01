@@ -4,6 +4,9 @@ from zeroconf import Zeroconf, ServiceInfo
 import socket
 import requests
 import time
+import sys
+import os
+import subprocess
 
 app = Flask(__name__)
 
@@ -27,18 +30,35 @@ def receive_user_data():
     user_token = request.form.get('token')
     database_url = "https://signlingual-901cc-default-rtdb.firebaseio.com/users/" + uid
     print(f"Received UID: {uid}, Token: {user_token}")
+
+    # setting environment variables to pass uid and token to the subprocess
+    os.environ['USERID'] = uid
+    os.environ['TOKEN'] = user_token
     return "Data received successfully"
 
 def check_status_loop():
     global running
+    script_process = None
+
     while True:
         if uid and user_token and database_url:
             ready = get_ready_status()
             if ready and not running:
                 print(".....Launching......")
+
+                # start the subprocess for hand detection
+                script_process = subprocess.Popen(['python', 'useModel.py'])
+
                 running = True
+
             elif not ready and running:
                 print(".....Stopping......")
+
+                # kill the subprocess for hand detection
+                if script_process:
+                    script_process.terminate()
+                    script_process = None
+
                 running = False
         time.sleep(1)
 
