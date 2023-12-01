@@ -28,7 +28,11 @@ public class NetworkDialog extends AppCompatDialogFragment {
 
         qrCodeImage = view.findViewById(R.id.qrCode);
         Bitmap qrCode = getArguments().getParcelable("qrCode");
-        qrCodeImage.setImageBitmap(qrCode);
+        int newWidth = 1000; // Adjust the width as needed
+        int newHeight = 1000; // Adjust the height as needed
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(qrCode, newWidth, newHeight, false);
+        qrCodeImage.setImageBitmap(resizedBitmap);
+//        qrCodeImage.setImageBitmap(qrCode);
 
         builder.setView(view);
         return builder.create();

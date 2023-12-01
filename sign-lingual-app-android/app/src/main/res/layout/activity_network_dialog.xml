@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Scan the QR code with the external device to connect it to Wi-Fi"
-
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/qrCode"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,8 +18,8 @@
 
     <ImageView
         android:id="@+id/qrCode"
-        android:layout_width="227dp"
-        android:layout_height="268dp"
+        android:layout_width="349dp"
+        android:layout_height="356dp"
         android:src="@drawable/app_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
