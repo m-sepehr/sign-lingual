@@ -1,5 +1,7 @@
 package com.example.signlingual;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 
 import android.content.SharedPreferences;
@@ -8,18 +10,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.chaquo.python.android.AndroidPlatform;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+
 public class LiveTranslation extends BaseActivity {
     String message="";
     TextView conversation;
     Button launch, stop;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     DatabaseReference readyReference;
     DatabaseReference userRef, databaseReference;
     SharedPreferences sharedPreferences;
@@ -44,6 +54,10 @@ public class LiveTranslation extends BaseActivity {
         }else{
             Log.d("LiveTranslation", "userID is null");
             finish();
+        }
+
+        if(!Python.isStarted()){
+            Python.start(new AndroidPlatform(this));
         }
 
 
@@ -106,9 +120,34 @@ public class LiveTranslation extends BaseActivity {
                 stop.setVisibility(View.VISIBLE);
                 readyReference.setValue(true);
 
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = mAuth.getCurrentUser();
+                user.getIdToken(true)
+                        .addOnCompleteListener(tokenTask -> {
+                            if (tokenTask.isSuccessful()) {
+                                //getting the token
+                                String token = tokenTask.getResult().getToken();
+                                preferences = getSharedPreferences("Credentials", MODE_PRIVATE);
+                                String userID = user.getUid();
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("userID", userID);
+                                editor.apply();
+                                Log.i("Token", token);
 
+                                // Initialize Python
+                                Python python = Python.getInstance();
+                                PyObject pyObject = python.getModule("network");
+
+                                // Call the Python function with arguments
+                                pyObject.callAttr("main", userID, token);
+                            } else {
+                                // Handle failure to obtain token
+                                Log.e(TAG, "Failed to obtain authentication token.", tokenTask.getException());
+                            }
+                        });
             }
         });
+
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
