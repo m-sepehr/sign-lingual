@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.chaquo.python.android.AndroidPlatform;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,6 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.IOException;
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+
+import org.checkerframework.checker.units.qual.A;
 
 public class SignInActivity extends BaseActivity {
     //shared preferences
@@ -50,7 +57,9 @@ public class SignInActivity extends BaseActivity {
         passwordInput = findViewById(R.id.passwordInput);
         signInButton = findViewById(R.id.signInButton);
         createAccountButton = findViewById(R.id.createAccountButton);
-
+//        if(!Python.isStarted()){
+//            Python.start(new AndroidPlatform(this));
+//        }
     }
 
     private void signIn(String email, String password) {
@@ -68,18 +77,36 @@ public class SignInActivity extends BaseActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            if(user.isEmailVerified()) {
-                                updateUI(user);
-                                preferences = getSharedPreferences("Credentials", MODE_PRIVATE);
-                                //get the UserID for loggedIn User
-                                String userID = user.getUid();
-                                //store the userID in shared preferences
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putBoolean("isLoggedIn", true);
-                                editor.putString("userID", userID);
-                                editor.apply();
+                            if (user.isEmailVerified()) {
+                                // Get the authentication token
+                                user.getIdToken(true)
+                                        .addOnCompleteListener(tokenTask -> {
+                                            if (tokenTask.isSuccessful()) {
+                                                //getting the token
+                                                String token = tokenTask.getResult().getToken();
+                                                updateUI(user);
+                                                preferences = getSharedPreferences("Credentials", MODE_PRIVATE);
+                                                String userID = user.getUid();
+                                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                editor.putString("userID", userID);
+                                                editor.putBoolean("isLoggedIn", true);
+                                                editor.putString("token", token);
+                                                editor.apply();
+                                                Log.i("Token", token);
 
-                            } else {
+                                                // Initialize Python
+//                                                Python python = Python.getInstance();
+//                                                PyObject pyObject = python.getModule("network");
+//
+//                                                // Call the Python function with arguments
+//                                                pyObject.callAttr("main", userID, token);
+
+                                            } else {
+                                                // Handle failure to obtain token
+                                                Log.e(TAG, "Failed to obtain authentication token.", tokenTask.getException());
+                                                updateUI(null);
+                                            }
+                                        });} else {
                                 Toast.makeText(SignInActivity.this, "Please verify your email.",
                                         Toast.LENGTH_SHORT).show();
                                 updateUI(null);
@@ -141,6 +168,7 @@ public class SignInActivity extends BaseActivity {
                             DatabaseReference userRef = mDatabase.getReference("users").child(user.getUid());
                             userRef.child("ready").setValue(false);
                             userRef.child("sentence").setValue("");
+                            userRef.child("ip_address").setValue("");
                             sendEmailVerification();
                             Toast.makeText(SignInActivity.this, "Email verification sent, Please verify", Toast.LENGTH_SHORT).show();
 
@@ -185,6 +213,5 @@ public class SignInActivity extends BaseActivity {
             Log.e(TAG, "Exception in updateUI", e);
         }
     }
-
 
 }

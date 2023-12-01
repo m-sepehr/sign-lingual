@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignInActivity">
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:src="@drawable/app_icon"-->
-<!--        android:scaleType="centerInside"-->
-<!--        android:scaleX="2.5"-->
-<!--        android:scaleY="2.5"-->
-<!--        android:translationY="50dp"-->
-<!--        android:alpha="0.04"/>-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/app_icon"
+        android:scaleType="centerInside"
+        android:scaleX="2.5"
+        android:scaleY="2.5"
+        android:translationY="50dp"
+        android:alpha="0.04"/>
 
 
     <ImageView

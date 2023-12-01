@@ -18,8 +18,9 @@ android {
             pip {
                 // A requirement specifier, with or without a version number:
 //                install "tensorflowlite" // Use the correct package name for TensorFlow Lite
-                install "tflite-runtime"
+//                install "tflite-runtime"
                 install "numpy"
+                install "requests"
 //                install "opencv-python"  // OpenCV package
 //                install "mediapipe"
 
@@ -91,4 +92,6 @@ dependencies {
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth")
+
+    implementation 'com.google.zxing:core:3.4.0'
 }
