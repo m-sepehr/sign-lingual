@@ -26,11 +26,12 @@ import com.chaquo.python.Python;
 
 public class LiveTranslation extends BaseActivity {
     String message="";
+    String ip_address_string;
     TextView conversation;
     Button launch, stop;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    DatabaseReference readyReference;
+    DatabaseReference readyReference, ip_address;
     DatabaseReference userRef, databaseReference;
     SharedPreferences sharedPreferences;
 
@@ -47,6 +48,7 @@ public class LiveTranslation extends BaseActivity {
             userRef = mDatabase.getReference("users").child(userID);
             databaseReference = userRef.child("sentence");
             readyReference = userRef.child("ready");
+            ip_address = userRef.child("ip_address");
             conversation = findViewById(R.id.text_translated);
             launch = findViewById(R.id.start_translation);
             stop = findViewById(R.id.stop_translation);
@@ -71,6 +73,23 @@ public class LiveTranslation extends BaseActivity {
                     readable = true;
                 }else{
                     readable = false;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        ip_address.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    ip_address_string = snapshot.getValue().toString();
+                    Log.d("LiveTranslation", "ip address is: " + ip_address_string);
+//                    Toast.makeText(LiveTranslation.this, "ip address is: " + ip_address_string, Toast.LENGTH_SHORT).show();
+                }else{
+                    Log.d("LiveTranslation", "ip address does not exist");
                 }
             }
 
@@ -139,7 +158,7 @@ public class LiveTranslation extends BaseActivity {
                                 PyObject pyObject = python.getModule("network");
 
                                 // Call the Python function with arguments
-                                pyObject.callAttr("main", userID, token);
+                                pyObject.callAttr("main", userID, token, ip_address_string);
                             } else {
                                 // Handle failure to obtain token
                                 Log.e(TAG, "Failed to obtain authentication token.", tokenTask.getException());

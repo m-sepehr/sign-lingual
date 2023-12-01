@@ -57,9 +57,9 @@ public class SignInActivity extends BaseActivity {
         passwordInput = findViewById(R.id.passwordInput);
         signInButton = findViewById(R.id.signInButton);
         createAccountButton = findViewById(R.id.createAccountButton);
-        if(!Python.isStarted()){
-            Python.start(new AndroidPlatform(this));
-        }
+//        if(!Python.isStarted()){
+//            Python.start(new AndroidPlatform(this));
+//        }
     }
 
     private void signIn(String email, String password) {
@@ -95,11 +95,11 @@ public class SignInActivity extends BaseActivity {
                                                 Log.i("Token", token);
 
                                                 // Initialize Python
-                                                Python python = Python.getInstance();
-                                                PyObject pyObject = python.getModule("network");
-
-                                                // Call the Python function with arguments
-                                                pyObject.callAttr("main", userID, token);
+//                                                Python python = Python.getInstance();
+//                                                PyObject pyObject = python.getModule("network");
+//
+//                                                // Call the Python function with arguments
+//                                                pyObject.callAttr("main", userID, token);
 
                                             } else {
                                                 // Handle failure to obtain token
@@ -168,6 +168,7 @@ public class SignInActivity extends BaseActivity {
                             DatabaseReference userRef = mDatabase.getReference("users").child(user.getUid());
                             userRef.child("ready").setValue(false);
                             userRef.child("sentence").setValue("");
+                            userRef.child("ip_address").setValue("");
                             sendEmailVerification();
                             Toast.makeText(SignInActivity.this, "Email verification sent, Please verify", Toast.LENGTH_SHORT).show();
 

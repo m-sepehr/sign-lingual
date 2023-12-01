@@ -1,8 +1,8 @@
 import requests
 
-def main(UserID, Token):
+def main(UserID, Token, ip_address):
     # Get command-line arguments
-    friend_ip = "IP ADDRESS HOLDER"
+    friend_ip = ip_address
     friend_port = 12345
     uid = UserID
     token = Token
