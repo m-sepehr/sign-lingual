@@ -12,7 +12,7 @@
             android:icon="@drawable/ic_launcher_foreground"/>
         <item
             android:id="@+id/standaloneMode"
-            android:title="StandaloneMode"
+            android:title="Standalone Mode"
             android:icon="@drawable/ic_launcher_foreground"/>
         <item
             android:id="@+id/settings"
@@ -20,7 +20,7 @@
             android:icon="@drawable/ic_launcher_foreground"/>
         <item
             android:id="@+id/LogOut"
-            android:title="LogOut"
+            android:title="Log out"
             android:icon="@drawable/ic_launcher_foreground"/>
 
     </group>
