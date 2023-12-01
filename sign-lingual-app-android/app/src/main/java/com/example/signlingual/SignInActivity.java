@@ -90,6 +90,8 @@ public class SignInActivity extends BaseActivity {
                                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                                 editor.putString("userID", userID);
                                                 editor.apply();
+                                                editor.putString("token", token);
+                                                editor.apply();
                                                 Log.i("Token", token);
 
                                                 // Initialize Python

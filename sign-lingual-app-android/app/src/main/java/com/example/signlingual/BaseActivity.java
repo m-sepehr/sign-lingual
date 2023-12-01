@@ -64,14 +64,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             params.putString("message", "User navigated to Home");
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
-        } else if (itemID == R.id.page1) {
-            params.putString("message", "User navigated to Page 1");
-            Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
-            startActivity(intent);
-        } else if (itemID == R.id.settings) {
-            params.putString("message", "User navigated to Settings");
-            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(intent);
         }else if (itemID == R.id.liveTranslation) {
             params.putString("message", "User navigated to Live Translation");
             Intent intent = new Intent(getApplicationContext(), LiveTranslation.class);
@@ -79,6 +71,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         } else if (itemID == R.id.standaloneMode) {
             params.putString("message", "User navigated to Standalone");
             Intent intent = new Intent(getApplicationContext(), StandaloneActivity.class);
+            startActivity(intent);
+        } else if (itemID == R.id.settings) {
+            params.putString("message", "User navigated to Settings");
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
         }else if (itemID == R.id.LogOut) {//adding the logout and logic behind it
             params.putString("message", "User signed out");

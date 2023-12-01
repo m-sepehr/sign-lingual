@@ -47,6 +47,7 @@ android:id="@+id/drawer_layout"
                 android:layout_height="match_parent"
                 android:layout_weight=".15"
                 android:background="@drawable/shape4"
+                android:src="@drawable/app_icon"
                 />
             <TextView
                 android:id="@+id/standaloneTextHeader"
@@ -57,21 +58,25 @@ android:id="@+id/drawer_layout"
                 android:textColor="#000000"
                 android:text=" Standalone Mode \n use computer vision to detect sign language"/>
         </LinearLayout>
-            <TextView
-                android:id="@+id/CameraWindow"
+            <FrameLayout
+                android:id="@+id/container2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight=".45"
-                android:background="@drawable/shape3"
-                android:textColor="#000000"
-                android:text="CAMERA WINDOW"/>
+                android:background="@android:color/black"
+                >
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/blank"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight=".05"
-                tools:text="BLANK" />
+                tools:text="Transcript"
+                android:text="Transcript"
+                android:textColor="#000000"
+                android:textSize="18dp"
+                android:textAlignment="center"/>
 
             <TextView
                 android:id="@+id/text_translated"

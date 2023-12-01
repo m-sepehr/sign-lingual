@@ -1,6 +1,7 @@
 package com.example.signlingual;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -63,9 +64,8 @@ public class SettingsFragments extends PreferenceFragment {
     private void setPreferenceListeners() {
         // Button Listeners
         btn_linkDevice.setOnPreferenceClickListener(preference -> {
-            //TODO: implement connection protocols. i.e. bluetooth pairing, WiFi/Cloud/HotSpot
-            // STUB
-            Toast.makeText(getContext(), "Not implemented Yet", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getActivity().getApplicationContext(), networkActivity.class);
+            startActivity(intent);
             return true;
         });
         btn_tutorial.setOnPreferenceClickListener(preference -> {
