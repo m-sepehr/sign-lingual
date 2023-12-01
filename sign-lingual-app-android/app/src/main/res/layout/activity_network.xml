@@ -58,7 +58,9 @@
                     android:layout_weight="0.1"
                     android:textSize="15dp"
                     android:hint="Enter wifi Name"
-                    android:gravity="center|bottom"/>
+                    android:gravity="center|bottom"
+                    android:inputType="text"
+                    android:singleLine="true" />
                 <TextView
                     android:id="@+id/passWordTextView"
                     android:layout_width="match_parent"
@@ -74,7 +76,8 @@
                     android:layout_weight="0.1"
                     android:textSize="15dp"
                     android:hint="Enter wifi password"
-                    android:gravity="center|bottom" />
+                    android:gravity="center|bottom"
+                    android:inputType="textPassword"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

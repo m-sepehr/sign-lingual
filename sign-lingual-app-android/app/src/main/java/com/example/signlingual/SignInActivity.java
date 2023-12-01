@@ -89,7 +89,7 @@ public class SignInActivity extends BaseActivity {
                                                 String userID = user.getUid();
                                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                                 editor.putString("userID", userID);
-                                                editor.apply();
+                                                editor.putBoolean("isLoggedIn", true);
                                                 editor.putString("token", token);
                                                 editor.apply();
                                                 Log.i("Token", token);

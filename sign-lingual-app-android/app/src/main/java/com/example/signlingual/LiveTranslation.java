@@ -138,6 +138,8 @@ public class LiveTranslation extends BaseActivity {
                 stop.setClickable(true);
                 stop.setVisibility(View.VISIBLE);
                 readyReference.setValue(true);
+                message = "";
+                conversation.setText(message);
 
                 mAuth = FirebaseAuth.getInstance();
                 FirebaseUser user = mAuth.getCurrentUser();
