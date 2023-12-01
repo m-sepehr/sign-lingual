@@ -30,7 +30,6 @@ public class MainActivity extends BaseActivity {
     private LinearLayout layoutStandalone, layoutConRPI;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     DatabaseReference userRef, ip_address;
-    String ip_address_string="";
 
 
     @Override
