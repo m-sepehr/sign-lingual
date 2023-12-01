@@ -82,10 +82,11 @@ def scan_qr_code():
 
         # Decode QR code
         decoded_objects = decode(frame)
-
+    
         for obj in decoded_objects:
             # Assuming the QR code contains Wi-Fi credentials in the format "WIFI:S:SSID;T:WPA;P:password;;"
             if obj.type == 'QRCODE' and b'WIFI:' in obj.data.upper():
+                os.system(f'afplay resources/Glass.aiff')
                 return obj.data.decode("utf-8")
 
 
