@@ -84,9 +84,29 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             editor.remove("userId");
             editor.putBoolean("isLoggedIn", false);
             editor.apply();
+
+
+
             startActivity(intent);
+
+
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+    @Override
+    public void onBackPressed() {
+        SharedPreferences preferences = getSharedPreferences("Credentials", MODE_PRIVATE);
+        boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
+
+        if (!isLoggedIn) {
+            // If not logged in, exit to SignInActivity or exit the app
+            Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 }
