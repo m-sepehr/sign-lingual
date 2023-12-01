@@ -29,6 +29,8 @@ public class networkActivity extends BaseActivity {
         setContentView(R.layout.activity_network);
         super.setupUI();
 
+        preferences = getSharedPreferences("Credentials", MODE_PRIVATE);
+
         wifiName = findViewById(R.id.wifiNameInput);
         wifiPassword = findViewById(R.id.passwordInput);
         generateButton = findViewById(R.id.generateButton);
@@ -39,8 +41,9 @@ public class networkActivity extends BaseActivity {
                 String ssid = wifiName.getText().toString();
                 String password = wifiPassword.getText().toString();
                 String encryptionType = "WPA";
-
-                Bitmap qrCodeBitmap = generateWifiQRCode(ssid, password, encryptionType);
+                String userID = preferences.getString("userID", "default_value");
+                String userToken = preferences.getString("token", "default_value");
+                Bitmap qrCodeBitmap = generateWifiQRCode(ssid, password, encryptionType, userID, userToken);
                 if (qrCodeBitmap != null) {
                     shareQRCode(qrCodeBitmap);
                 }
@@ -49,8 +52,8 @@ public class networkActivity extends BaseActivity {
         });
 
     }
-    public Bitmap generateWifiQRCode(String ssid, String password, String encryptionType) {
-        String wifiData = "WIFI:S:" + ssid + ";T:" + encryptionType + ";P:" + password + ";;";
+    public Bitmap generateWifiQRCode(String ssid, String password, String encryptionType, String userID, String userToken) {
+        String wifiData = "WIFI:S:" + ssid + "-" + userID + "-" + userToken  + ";T:" + encryptionType + ";P:" + password + ";;";
 
         try {
             QRCodeWriter writer = new QRCodeWriter();
