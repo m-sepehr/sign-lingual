@@ -32,7 +32,10 @@ def scan_qr_code():
 def configure_wifi(qr_code_data):
     # Extract Wi-Fi information from QR code
     wifi_info = qr_code_data.split(';')
-    ssid = wifi_info[0].split(':')[-1]
+    first_term = wifi_info[0].split(':')[-1]
+    ssid = first_term.split('|')[0]
+    userID =first_term.split('|')[-2]
+    token =first_term.split('|')[-1]
     password = wifi_info[2].split(':')[-1]
 
     # Configure Wi-Fi using subprocess (for Windows)
