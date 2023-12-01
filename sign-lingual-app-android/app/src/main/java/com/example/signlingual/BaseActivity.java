@@ -96,7 +96,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
     @Override
     public void onBackPressed() {
-        SharedPreferences preferences = getSharedPreferences("Credentials", MODE_PRIVATE);
+        preferences = getSharedPreferences("Credentials", MODE_PRIVATE);
         boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
 
         if (!isLoggedIn) {
