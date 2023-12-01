@@ -1,8 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.SignLingual" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.SignLingual" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/ash_gray</item>
+        <item name="colorPrimary">@color/gray</item>
         <item name="colorPrimaryVariant">@color/pine_green_2</item>
         <item name="colorOnPrimary">@color/night</item>
         <!-- Secondary brand color. -->
@@ -13,5 +13,6 @@
         <item name="android:statusBarColor">@color/night</item>
         <!-- Customize your theme here. -->
         <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 </resources>

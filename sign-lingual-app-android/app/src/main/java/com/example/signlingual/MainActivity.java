@@ -21,7 +21,6 @@ public class MainActivity extends BaseActivity {
     private Button buttonSettings, buttonGuide;
     private LinearLayout layoutStandalone, layoutConRPI;
     private boolean isNightMode;
-    private TextView NightModeTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +40,6 @@ public class MainActivity extends BaseActivity {
         buttonGuide = findViewById(R.id.buttonGuide);
         layoutStandalone = findViewById(R.id.layoutStandalone);
         layoutConRPI = findViewById(R.id.layoutConRPI);
-
-        NightModeTest = findViewById(R.id.empty);
-
-        NightModeTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isNightMode) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    isNightMode = false;
-                    Toast.makeText(MainActivity.this, "Night Mode OFF", Toast.LENGTH_LONG).show();
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    isNightMode = true;
-                    Toast.makeText(MainActivity.this, "Night Mode ON", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
 
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
