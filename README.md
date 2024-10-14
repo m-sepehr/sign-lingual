@@ -1,85 +1,163 @@
-# Android Sign Language Translator App
+# Sign-Lingual
 
-This Android app is designed to translate sign language into text using camera-based input, integrating machine learning models for hand landmark detection and translation. It features Wi-Fi QR code generation for device setup and uses TensorFlow Lite for on-device model inference.
+## Overview
+The **Sign-Lingual Project** is a real-time sign language recognition system that translates hand gestures into text or speech using machine learning and OpenAI technologies. It leverages advanced tools like OpenAI’s Language Model (LLM) for typo correction and contextual understanding, as well as OpenAI’s Whisper for text-to-speech conversion. The system consists of three key components:
 
-## Features
+1. **Machine Learning Model**: Handles gesture recognition through a trained neural network model.
+2. **PC Host Application**: Acts as the server and inference engine, performing gesture recognition and communicating with Firebase and the mobile app.
+3. **Android App**: Provides the user interface for visualizing and interacting with the recognized signs in real-time.
 
-- **Live Translation**: The app captures sign language gestures through the camera and translates them into text using a machine learning model.
-- **Wi-Fi QR Code Setup**: Generates and scans QR codes containing Wi-Fi credentials to configure devices for network access.
-- **Offline Support**: The app uses TensorFlow Lite models for translation, making it functional without an internet connection.
-- **Settings Customization**: Users can customize app settings through the `SettingsActivity`.
+---
 
-## Project Structure
+## 1. Machine Learning (ML) Component
 
-### Java Files
-- `MainActivity.java`: Handles the main user interface of the app.
-- `LiveTranslation.java`: Manages the live camera feed and translates sign language gestures.
-- `AutoFitTextureView.java`, `CameraConnectionFragment.java`: Handle camera preview and connection for capturing hand gestures.
-- `BaseActivity.java`, `SignInActivity.java`, `StandaloneActivity.java`: Other UI components for user authentication and standalone functionalities.
-- `LocaleConfig.java`: Manages localization settings for the app.
-- `SettingsActivity.java`, `SettingsFragments.java`: Manage user settings and preferences.
-- `networkActivity.java`: Generates Wi-Fi QR codes for network configuration.
-- `NetworkDialog.java`: Displays QR codes for sharing Wi-Fi information.
+The **sign-lingual-ml** directory contains the machine learning workflows for preprocessing, training, and model deployment. This includes the key steps needed to recognize hand gestures based on landmarks extracted from images or video frames.
 
-### Python Scripts (for backend processing and machine learning)
-- `network.py`: Defines the neural network architecture used for hand gesture recognition.
-- `augmentData.py`: Performs data augmentation to improve the training dataset.
-- `trainModelWithMediapipe.py`: Trains a machine learning model with hand landmark data extracted via Mediapipe.
-- `convertToTensorFlowLite.py`: Converts the trained model into a TensorFlow Lite model for use on Android devices.
-- `useModel.py`: Executes the trained model on live sign language input from the camera.
+### Key Components:
 
-### Model Files
-- `asl_landmark_detection_model_mediapipe.h5`: The Keras model for sign language detection.
-- `asl_landmark_detection_model_mediapipe.tflite`: The TensorFlow Lite model for real-time inference on Android.
+#### 1.1 Data Preprocessing and Landmark Extraction
 
-### Server Components
-- `server.py`, `testServer.py`: Backend server components for Firebase integration and remote functionality.
+- **Landmark Extraction**: The `extractLandmarks.py` script is responsible for extracting hand landmarks from images using **MediaPipe**. This script initializes **MediaPipe’s hand solution** to process each image, extracting the hand landmarks as the key points needed for gesture recognition. The extracted landmarks are fed into the training pipeline for further processing.
 
-### Other Files
-- `AndroidManifest.xml`: Defines permissions, activities, and services for the app.
+  Key functionalities include:
+  - **MediaPipe Integration**: The script initializes **MediaPipe** in static mode to extract hand landmarks from individual images.
+  - **Augmentation**: To ensure robustness, the script uses `ImageDataGenerator` to apply augmentations such as:
+    - Random width and height shifts.
+    - Horizontal flips.
+    - Filling gaps with nearest-neighbor interpolation.
+
+  The landmarks extracted from each image are paired with their corresponding labels (e.g., gestures "A", "B", "C", etc.), which are critical for training the machine learning model.
+
+#### 1.2 Model Training
+
+The model is trained using TensorFlow/Keras, and the `trainModelWithMediapipe.py` script orchestrates the training process:
+
+- **Model Architecture**: The custom deep neural network (DNN) used for gesture recognition includes:
+  - **Dense (Fully Connected) Layers**: For processing hand landmarks.
+  - **L2 Regularization**: To prevent overfitting and ensure the model generalizes well.
+  - **Adam Optimizer**: Used to optimize the model during training.
   
-## Technologies Used
+- **Training Process**:
+  - Hand gestures are mapped to labels (e.g., "A", "B", "C", etc.). These labels are converted into numerical values for classification using a label mapping dictionary.
+  - **Early Stopping** is employed to stop training when the model performance stops improving.
+  
+  The final trained model is saved in the **models/** directory in HDF5 format (`asl_landmark_detection_model_mediapipe.h5`), making it ready for deployment.
 
-- **Android**: Primary platform for app development.
-- **Python**: Used for machine learning model training and backend processing.
-- **Mediapipe**: For extracting hand landmarks.
-- **TensorFlow & TensorFlow Lite**: For training and deploying machine learning models on Android.
-- **Chaquopy**: Embeds Python into the Android app.
-- **QR Code (ZXing)**: For generating and reading Wi-Fi setup QR codes.
+#### 1.3 Model Conversion
 
-## Setup Instructions
+After training, the model is converted into a mobile-compatible format using TensorFlow Lite:
 
-### Prerequisites
+- **TensorFlow Lite Conversion**: The `convertToTensorFlowLite.py` script converts the trained model into **TensorFlow Lite** format (`asl_landmark_detection_model_mediapipe.tflite`) for efficient inference on mobile devices. Optimizations are applied during the conversion process to minimize the model size and computational load.
 
-- Android Studio
-- Python 3.x with TensorFlow and Mediapipe installed
-- Chaquopy plugin for integrating Python with Android
+#### 1.4 Real-Time Inference and OpenAI Whisper Integration
 
-### Steps
+The **useModel.py** script handles real-time gesture recognition, including integration with OpenAI Whisper for text-to-speech:
 
-1. **Clone the Repository**:
-   ```bash
-   git clone <repository-url>
-   ```
-2. **Open in Android Studio**: Open the project in Android Studio and sync the dependencies.
-3. **Install Python Dependencies**:
+- **Mediapipe Integration**: Captures real-time hand gestures, extracts hand landmarks, and feeds them into the TensorFlow Lite model for gesture recognition.
+  
+- **Firebase Integration**: Recognized gestures are sent to Firebase, allowing real-time updates to be retrieved by the Android app.
+  
+- **OpenAI Whisper Integration**: Converts recognized gestures into audible speech using **gTTS** (Google Text-to-Speech) and OpenAI’s Whisper for enhanced TTS functionality. Whisper adds the ability to generate natural-sounding speech for the recognized signs, improving user accessibility.
+
+### Overall Workflow:
+1. **Landmark Extraction**: Extract hand landmarks using MediaPipe.
+2. **Model Training**: Train the neural network model using TensorFlow/Keras.
+3. **Model Conversion**: Convert the trained model to TensorFlow Lite format for mobile deployment.
+4. **Inference and TTS**: Capture real-time gestures, perform inference, and send the results to Firebase. Optionally, convert recognized text to speech using OpenAI Whisper.
+
+---
+
+## 2. PC Host Application Architecture
+
+The **PC Host Application** orchestrates the entire recognition process and facilitates real-time communication between the system components.
+
+### Key Components:
+
+#### 2.1 Server Setup and Communication
+
+- **Flask-based API Server**: The `server.py` script sets up a Flask web server that handles communication between the mobile app and the machine learning backend.
+
+- **Zeroconf Networking**: This allows devices on the local network to discover the server and establish connections without manual configuration.
+
+- **QR Code Scanning**: The server uses QR codes to authenticate devices, which carry necessary configuration details like Firebase URLs and user tokens.
+
+- **Firebase Communication**: The host continuously sends recognized gestures to Firebase, enabling real-time updates for the Android app.
+
+#### 2.2 Real-Time Model Inference
+
+- **MediaPipe Integration**: The PC host uses MediaPipe to capture hand gestures from a connected camera, extract the landmarks, and perform gesture recognition in real-time using the TensorFlow Lite model.
+  
+- **OpenAI Whisper Integration**: Converts recognized gestures into speech using Whisper, providing auditory feedback for users.
+
+#### 2.3 OpenAI LLM Integration for Typo Correction and Contextual Understanding
+
+The PC host application integrates **OpenAI's Language Models (LLM)** to enhance the recognized text by correcting typos and generating contextually relevant responses. This ensures that the recognized gestures are refined for better accuracy and user understanding.
+
+- **Typo Correction**: Once a gesture is recognized and converted into text, the system uses OpenAI LLM to analyze the text for possible corrections. This step helps ensure that any minor errors during recognition are automatically corrected before being sent to the user.
+
+- **Contextual Understanding**: In addition to typo correction, the OpenAI LLM can provide extended contextual responses based on the recognized gestures. This is particularly useful for multi-sign sequences that form sentences, as the model can generate more human-like and grammatically accurate responses.
+
+### Example Workflow for OpenAI Integration:
+1. **Gesture Recognition**: The recognized text is sent to OpenAI’s LLM for further processing.
+2. **Typo Correction**: OpenAI analyzes the text, corrects any errors, and ensures it is formatted correctly.
+3. **Contextual Response**: OpenAI generates contextual responses or suggestions, such as completing a sentence or improving its structure.
+4. **Send to Firebase**: The corrected text is sent to Firebase and displayed on the Android app.
+
+---
+
+## 3. Android App Architecture
+
+The **Android App** provides the interface for users to visualize and interact with the system. It retrieves real-time gesture recognition results from Firebase and enables live sign language translation.
+
+### Key Components:
+
+#### 3.1 MainActivity.java
+
+- **Firebase Integration**: Connects to the Firebase Realtime Database to retrieve recognized gestures sent from the PC host.
+
+- **Navigation**: Provides options to access settings, user guides, and initiate live translation sessions with the PC host.
+
+#### 3.2 LiveTranslation.java
+
+This activity handles the real-time display of recognized gestures, using Firebase to continuously retrieve and update results.
+
+- **Chaquopy Integration**: If additional gesture processing is required, the app can use **Chaquopy** to run Python scripts on Android.
+
+- **UI Updates**: The recognized gestures are displayed in real-time using a **TextView**, with the option to start or stop live translation sessions.
+
+---
+
+## Installation and Setup
+
+### PC Host Application:
+1. Install the dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-4. **Prepare the Model**: Convert the trained model to TensorFlow Lite using `convertToTensorFlowLite.py`.
-5. **Build and Run**: Compile and run the app in an Android emulator or physical device.
+2. Run the Flask server:
+   ```bash
+   python server.py
+   ```
+3. Configure Firebase with the appropriate database URL and credentials.
 
-### Optional Steps
+### Android Application:
+1. Open the project in Android Studio.
+2. Sync the Gradle project and install dependencies.
+3. Build and install the app on your Android device.
 
-- Use `trainModelWithMediapipe.py` to retrain the model with new data.
-- Generate a QR code for Wi-Fi setup in `networkActivity.java`.
+### Machine Learning:
+1. To train the model, navigate to the **sign-lingual-ml** directory and run:
+   ```bash
+   python training/trainModelWithMediapipe.py
+   ```
+2. Convert the trained model to TensorFlow Lite:
+   ```bash
+   python model-conversion/convertToTensorFlowLite.py
+   ```
 
-## Usage
+---
 
-1. **Sign In**: Start by signing in via `SignInActivity`.
-2. **Wi-Fi QR Code**: Configure device network settings by generating or scanning a QR code for Wi-Fi credentials in the `networkActivity`.
-3. **Live Translation**: Start live translation by capturing sign language gestures through the camera.
+## Contribution
 
-## Contributing
+Contributions are welcome! Feel free to open issues or submit pull requests to enhance the system's functionality or optimize the machine learning models.
 
-Contributions are welcome! Please submit a pull request if you’d like to improve the project or add new features.
